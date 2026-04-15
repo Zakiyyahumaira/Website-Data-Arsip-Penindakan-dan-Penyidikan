@@ -80,33 +80,6 @@ $maps = $pdo->query(
                 </div>
             </div>
         
-        <div class="card" style="margin-top:20px">
-            <div class="card-header">
-                <h3>Daftar Map Arsip</h3>
-                <a href="map/tambah.php" class="btn btn-primary btn-sm">+ Tambah Map</a>
-            </div>
-
-            <div class="card-body">
-                <?php if (empty($maps)): ?>
-                    <p style="color:#9ca3af">Belum ada map</p>
-                <?php else: ?>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
-                        <?php foreach ($maps as $m): ?>
-                            <a href="map/detail.php?id=<?= $m['id'] ?>" style="text-decoration:none">
-                    <div class="stat-card" style="cursor:pointer">
-                        <div class="stat-icon blue">📁</div>
-                        <div>
-                            <div class="stat-num"><?= $m['total_arsip'] ?></div>
-                            <div class="stat-label"><?= sanitize($m['nama_map']) ?></div>
-                        </div>
-                    </div>
-                </a>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
-
 
 
             <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;align-items:start">
