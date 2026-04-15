@@ -4,6 +4,8 @@ require '../config/database.php';
 require '../config/functions.php';
 cekLogin();
 
+$maps = $pdo->query("SELECT * FROM map_arsip ORDER BY nama_map")->fetchAll();
+
 $errors = [];
 $old    = [];
 
@@ -20,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jumlah        = $_POST['jumlah'] !== '' ? $_POST['jumlah'] : null;
     $satuan        = trim($_POST['satuan'] ?? '');
     $tglDokumen    = $_POST['tanggal_dokumen'] ?? '';
+    $mapId         = $_POST['map_id'] ?? '';
 
     if (!$noSurat)     $errors[] = 'Nomor surat wajib diisi.';
     if (!$tglDokumen)  $errors[] = 'Tanggal dokumen wajib diisi.';
@@ -30,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$namaTempat) $errors[] = 'Nama tempat wajib diisi.';
     if (!$jumlah) $errors[] = 'Jumlah wajib diisi.';
     if (!$satuan) $errors[] = 'Satuan wajib diisi.';
-    
+    if (!$mapId) $errors[] = 'Map wajib dipilih.';
+
 
     if ($noSurat) {
         $cek = $pdo->prepare("SELECT id FROM arsip WHERE no_surat = ?");
@@ -49,13 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $stmt = $pdo->prepare(
             "INSERT INTO arsip
-             (no_surat, nama_pegawai, deskripsi, jenis_pelanggaran_id,
+             (map_id, no_surat, nama_pegawai, deskripsi, jenis_pelanggaran_id,
               wilayah_id, kecamatan_id, nama_tempat, jumlah, satuan,
               tanggal_dokumen, file_path, file_name, diunggah_oleh)
              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
         );
         $stmt->execute([
-            $noSurat, $namaPegawai, $deskripsi, $jenisId,
+            $mapId, $noSurat, $namaPegawai, $deskripsi, $jenisId,
             $wilayahId ?: null, $kecamatanId ?: null, $namaTempat,
             $jumlah, $satuan, $tglDokumen,
             $filePath, $fileName, $_SESSION['user_id']
@@ -140,6 +144,18 @@ if (!empty($old['wilayah_id'])) {
                                 <?php foreach ($jenisList as $j): ?>
                                 <option value="<?= $j['id'] ?>" <?= ($old['jenis_pelanggaran_id'] ?? '') == $j['id'] ? 'selected' : '' ?>>
                                     <?= sanitize($j['nama_pelanggaran']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Pilih Map <span style="color:#dc2626">*</span></label>  
+                            <select class="form-control" name="map_id" required>
+                                <option value="">-- Pilih Map --</option>
+                                <?php foreach ($maps as $m): ?>
+                                <option value="<?= $m['id'] ?>">
+                                    <?= htmlspecialchars($m['nama_map']) ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>

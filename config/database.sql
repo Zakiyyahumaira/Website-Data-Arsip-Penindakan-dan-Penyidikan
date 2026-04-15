@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS log_aktivitas (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+
 -- ============================================================
 -- DATA AWAL: PENGGUNA
 -- ============================================================
