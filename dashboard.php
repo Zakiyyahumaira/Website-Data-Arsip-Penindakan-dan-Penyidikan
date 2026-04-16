@@ -34,14 +34,6 @@ $perWilayah = $pdo->query(
      LEFT JOIN arsip a ON a.wilayah_id = w.id
      GROUP BY w.id ORDER BY total DESC"
 )->fetchAll();
-
-$maps = $pdo->query(
-    "SELECT m.*, COUNT(a.id) as total_arsip
-     FROM map_arsip m
-     LEFT JOIN arsip a ON a.map_id = m.id
-     GROUP BY m.id
-     ORDER BY m.nama_map"
-)->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="id">
