@@ -20,10 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jumlah        = $_POST['jumlah'] !== '' ? $_POST['jumlah'] : null;
     $satuan        = trim($_POST['satuan'] ?? '');
     $tglDokumen    = $_POST['tanggal_dokumen'] ?? '';
+    $mapId         = (int)($_POST['map_id'] ?? 0);
 
     if (!$noSurat)     $errors[] = 'Nomor surat wajib diisi.';
     if (!$tglDokumen)  $errors[] = 'Tanggal dokumen wajib diisi.';
     if (!$namaPegawai) $errors[] = 'Nama pegawai wajib diisi.';
+    if (!$mapId)       $errors[] = 'Map/folder wajib dipilih.';
     if (!$jenisId)     $errors[] = 'Jenis pelanggaran wajib dipilih.';
     if (!$wilayahId)   $errors[] = 'Wilayah wajib dipilih.';
     if (!$kecamatanId) $errors[] = 'Kecamatan wajib diisi.';
@@ -49,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $stmt = $pdo->prepare(
             "INSERT INTO arsip
-             (no_surat, nama_pegawai, deskripsi, jenis_pelanggaran_id,
+             (map_id, no_surat, nama_pegawai, deskripsi, jenis_pelanggaran_id,
               wilayah_id, kecamatan_id, nama_tempat, jumlah, satuan,
               tanggal_dokumen, file_path, file_name, diunggah_oleh)
-             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         );
         $stmt->execute([
-            $noSurat, $namaPegawai, $deskripsi, $jenisId,
+            $mapId ?: null, $noSurat, $namaPegawai, $deskripsi, $jenisId,
             $wilayahId ?: null, $kecamatanId ?: null, $namaTempat,
             $jumlah, $satuan, $tglDokumen,
             $filePath, $fileName, $_SESSION['user_id']
@@ -69,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $jenisList = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
 $wilayahs  = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
+$maps      = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
 
 // Kecamatan untuk wilayah yang sudah dipilih (jika ada POST error)
 $kecamatans = [];
@@ -111,6 +114,19 @@ if (!empty($old['wilayah_id'])) {
                 <div class="card-header"><h3>Formulir Upload Arsip</h3></div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label class="form-label" for="map_id">📁 Map/Folder <span style="color:#dc2626">*</span></label>
+                            <select class="form-control" id="map_id" name="map_id" required>
+                                <option value="">-- Pilih Map --</option>
+                                <?php foreach ($maps as $m): ?>
+                                <option value="<?= $m['id'] ?>" <?= ($old['map_id'] ?? '') == $m['id'] ? 'selected' : '' ?>>
+                                    📁 <?= sanitize($m['nama_map']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="form-hint"><a href="map.php">Kelola map di sini</a></div>
+                        </div>
 
                         <div class="form-row">
                             <div class="form-group">

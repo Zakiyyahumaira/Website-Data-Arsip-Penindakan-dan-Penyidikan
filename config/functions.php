@@ -66,6 +66,46 @@ function getKecamatanByWilayah($pdo, $wilayah_id) {
     return $stmt->fetchAll();
 }
 
+// ============================================================
+// FUNCTIONS UNTUK FITUR MAP/FOLDER (SIMPLE VERSION)
+// ============================================================
+
+// Fungsi untuk mendapatkan semua map
+function getSemuaMap($pdo) {
+    $stmt = $pdo->prepare("
+        SELECT * FROM map
+        ORDER BY nama_map ASC
+    ");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+// Fungsi untuk mendapatkan detail satu map
+function getMapDetail($pdo, $map_id) {
+    $stmt = $pdo->prepare("SELECT * FROM map WHERE id = ?");
+    $stmt->execute([$map_id]);
+    return $stmt->fetch();
+}
+
+// Fungsi untuk mendapatkan arsip dalam satu map
+function getArsipByMap($pdo, $map_id) {
+    $stmt = $pdo->prepare("
+        SELECT a.* FROM arsip a
+        WHERE a.map_id = ?
+        ORDER BY a.created_at DESC
+    ");
+    $stmt->execute([$map_id]);
+    return $stmt->fetchAll();
+}
+
+// Fungsi untuk menghitung jumlah arsip dalam map
+function hitungArsipInMap($pdo, $map_id) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) as jml FROM arsip WHERE map_id = ?");
+    $stmt->execute([$map_id]);
+    $result = $stmt->fetch();
+    return $result['jml'] ?? 0;
+}
+
 // BASE_URL dihitung dinamis berdasarkan PHP_SELF
 if (!defined('BASE_URL')) {
     $parts = explode('/', trim($_SERVER['PHP_SELF'], '/'));
