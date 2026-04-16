@@ -124,12 +124,12 @@ if (!empty($old['wilayah_id'])) {
                     <form method="POST" enctype="multipart/form-data">
 
                         <div class="form-group">
-                            <label class="form-label" for="map_id">📁 Map/Folder <span style="color:#dc2626">*</span></label>
+                            <label class="form-label" for="map_id"> Map <span style="color:#dc2626">*</span></label>
                             <select class="form-control" id="map_id" name="map_id" required>
                                 <option value="">-- Pilih Map --</option>
                                 <?php foreach ($maps as $m): ?>
                                 <option value="<?= $m['id'] ?>" <?= ($old['map_id'] ?? '') == $m['id'] ? 'selected' : '' ?>>
-                                    📁 <?= sanitize($m['nama_map']) ?>
+                                     <?= sanitize($m['nama_map']) ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
