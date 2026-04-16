@@ -18,16 +18,22 @@ if (!$map) {
 
 $mapName = $map['nama_map'];
 
-// Opsi: Hapus semua arsip dalam map, atau orphan-kan mereka
-// Untuk aman, kita orphan-kan (set map_id = NULL) daripada delete
-$stmt = $pdo->prepare("UPDATE arsip SET map_id = NULL WHERE map_id = ?");
+// Hapus semua arsip yang berada di map ini, termasuk file fisik
+$stmt = $pdo->prepare("SELECT * FROM arsip WHERE map_id = ?");
 $stmt->execute([$mapId]);
+$arsips = $stmt->fetchAll();
+foreach ($arsips as $arsip) {
+    if ($arsip['file_path'] && file_exists('../' . $arsip['file_path'])) {
+        @unlink('../' . $arsip['file_path']);
+    }
+}
+$pdo->prepare("DELETE FROM arsip WHERE map_id = ?")->execute([$mapId]);
 
-// Hapus map (beserta sub-map via ON DELETE CASCADE)
+// Hapus map itu sendiri
 $stmt = $pdo->prepare("DELETE FROM map WHERE id = ?");
 $stmt->execute([$mapId]);
 
-logAktivitas($pdo, $_SESSION['user_id'], 'Hapus map: ' . $mapName, null);
+logAktivitas($pdo, $_SESSION['user_id'], 'Hapus map dan arsip di dalamnya: ' . $mapName, null);
 
 header('Location: map.php?msg=hapus');
 exit;

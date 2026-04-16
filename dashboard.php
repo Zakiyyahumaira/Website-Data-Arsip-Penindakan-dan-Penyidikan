@@ -9,11 +9,14 @@ $totalJenis    = $pdo->query("SELECT COUNT(*) FROM jenis_pelanggaran")->fetchCol
 $totalUser     = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 $arsipBulanIni = $pdo->query("SELECT COUNT(*) FROM arsip WHERE MONTH(created_at)=MONTH(NOW()) AND YEAR(created_at)=YEAR(NOW())")->fetchColumn();
 
+$totalMap = $pdo->query("SELECT COUNT(*) FROM map")->fetchColumn();
+
 $arsipTerbaru = $pdo->query(
-    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, u.nama AS uploader
+    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, m.nama_map, u.nama AS uploader
      FROM arsip a
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
      LEFT JOIN wilayah w            ON a.wilayah_id = w.id
+     LEFT JOIN map m               ON a.map_id = m.id
      LEFT JOIN users u              ON a.diunggah_oleh = u.id
      ORDER BY a.created_at DESC LIMIT 8"
 )->fetchAll();
@@ -67,6 +70,10 @@ $perWilayah = $pdo->query(
                     <div><div class="stat-num"><?= $totalJenis ?></div><div class="stat-label">Jenis Pelanggaran</div></div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon violet">&#128194;</div>
+                    <div><div class="stat-num"><?= $totalMap ?></div><div class="stat-label">Total Map</div></div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-icon purple">&#128101;</div>
                     <div><div class="stat-num"><?= $totalUser ?></div><div class="stat-label">Pengguna</div></div>
                 </div>
@@ -81,7 +88,7 @@ $perWilayah = $pdo->query(
                     </div>
                     <div class="table-wrap">
                         <table>
-                            <thead><tr><th>No. Surat</th><th>Nama Pegawai</th><th>Jenis Pelanggaran</th><th>Wilayah</th><th>Tanggal</th></tr></thead>
+                            <thead><tr><th>No. Surat</th><th>Nama Pegawai</th><th>Map</th><th>Jenis Pelanggaran</th><th>Wilayah</th><th>Tanggal</th></tr></thead>
                             <tbody>
                             <?php if (empty($arsipTerbaru)): ?>
                                 <tr><td colspan="5" style="text-align:center;color:#9ca3af;padding:30px">Belum ada arsip</td></tr>
@@ -90,6 +97,7 @@ $perWilayah = $pdo->query(
                                 <tr>
                                     <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
                                     <td><a href="arsip/detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['nama_pegawai']) ?></a></td>
+                                    <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                     <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
                                     <td style="font-size:13px"><?= sanitize($a['nama_wilayah'] ?? '-') ?></td>
                                     <td style="color:#6b7280;font-size:13px"><?= formatTanggal(substr($a['created_at'],0,10)) ?></td>

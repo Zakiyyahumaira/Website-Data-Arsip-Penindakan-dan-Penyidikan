@@ -26,11 +26,12 @@ $total     = $total->fetchColumn();
 $totalPage = ceil($total / $perPage);
 
 $stmt = $pdo->prepare(
-    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, u.nama AS uploader
+    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, m.nama_map, u.nama AS uploader
      FROM arsip a
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
      LEFT JOIN wilayah w            ON a.wilayah_id = w.id
      LEFT JOIN kecamatan k          ON a.kecamatan_id = k.id
+     LEFT JOIN map m                ON a.map_id = m.id
      LEFT JOIN users u              ON a.diunggah_oleh = u.id
      $where
      ORDER BY a.created_at DESC
@@ -110,6 +111,7 @@ $msg = $_GET['msg'] ?? '';
                                 <th style="width:40px">#</th>
                                 <th>No. Surat</th>
                                 <th>Nama Pegawai</th>
+                                <th>Map</th>
                                 <th>Jenis Pelanggaran</th>
                                 <th>Wilayah</th>
                                 <th>Kecamatan</th>
@@ -121,7 +123,7 @@ $msg = $_GET['msg'] ?? '';
                         </thead>
                         <tbody>
                         <?php if (empty($arsips)): ?>
-                            <tr><td colspan="10">
+                            <tr><td colspan="11">
                                 <div class="empty-state">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                                     <p>Tidak ada arsip ditemukan</p>
@@ -133,6 +135,7 @@ $msg = $_GET['msg'] ?? '';
                                 <td style="color:#9ca3af"><?= $offset + $i + 1 ?></td>
                                 <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
                                 <td><a href="detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['nama_pegawai']) ?></a></td>
+                                <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                 <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
                                 <td style="font-size:13px"><?= sanitize($a['nama_wilayah'] ?? '-') ?></td>
                                 <td style="font-size:13px;color:#6b7280"><?= sanitize($a['nama_kecamatan'] ?? '-') ?></td>
