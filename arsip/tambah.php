@@ -72,7 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $jenisList = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
 $wilayahs  = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
-$maps      = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
+$maps      = [];
+try {
+    $maps = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
+} catch (PDOException $e) {
+    $errors[] = 'Data map tidak dapat dimuat. Pastikan tabel map sudah tersedia.';
+}
 
 // Kecamatan untuk wilayah yang sudah dipilih (jika ada POST error)
 $kecamatans = [];
