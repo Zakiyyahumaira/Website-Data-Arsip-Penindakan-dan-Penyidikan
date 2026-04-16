@@ -169,18 +169,6 @@ if (!empty($old['wilayah_id'])) {
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Pilih Map <span style="color:#dc2626">*</span></label>  
-                            <select class="form-control" name="map_id" required>
-                                <option value="">-- Pilih Map --</option>
-                                <?php foreach ($maps as $m): ?>
-                                <option value="<?= $m['id'] ?>">
-                                    <?= htmlspecialchars($m['nama_map']) ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
                         <!-- Wilayah & Kecamatan -->
                         <div class="form-row">
                             <div class="form-group">
