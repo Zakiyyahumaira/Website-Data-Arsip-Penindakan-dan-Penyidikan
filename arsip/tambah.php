@@ -202,8 +202,9 @@ if (!empty($old['wilayah_id'])) {
                         </div>
 
                         <!-- Wilayah & Kecamatan -->
+                        <label class="form-label" for="map_id" style="font-size: 15px; color: black" > Lokasi (Locus) </label>
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-group">                                
                                 <label class="form-label" for="wilayah_id">Wilayah <span style="color:#dc2626">*</span></label>
                                 <select class="form-control" id="wilayah_id" name="wilayah_id" required
                                         onchange="loadKecamatan(this.value)">
@@ -236,6 +237,7 @@ if (!empty($old['wilayah_id'])) {
                         </div>
 
                         <!-- Jumlah & Satuan -->
+                        <label class="form-label" for="map_id" style="font-size: 15px; color: black" > Barang  Hasil Penindakan </label>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" for="jumlah">Jumlah <span style="color:#dc2626">*</span></label>
@@ -253,9 +255,9 @@ if (!empty($old['wilayah_id'])) {
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="deskripsi">Keterangan / Deskripsi</label>
+                            <label class="form-label" for="deskripsi">Jenis Uraian Barang</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi"
-                                      placeholder="Keterangan singkat mengenai arsip ini..."><?= sanitize($old['deskripsi'] ?? '') ?></textarea>
+                                      placeholder="Keterangan mengenai jenis uraian barang..."><?= sanitize($old['deskripsi'] ?? '') ?></textarea>
                         </div>
 
                         <div class="form-group">

@@ -123,6 +123,12 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <?php if ($arsip['deskripsi']): ?>
+                        <div class="info-row">
+                            <div class="info-label">Jenis Uraian Barang</div>
+                            <div class="info-value" style="line-height:1.7"><?= nl2br(sanitize($arsip['deskripsi'])) ?></div>
+                        </div>
+                        <?php endif; ?>
                         <div class="info-row">
                             <div class="info-label">Tanggal Dokumen</div>
                             <div class="info-value"><?= formatTanggal($arsip['tanggal_dokumen']) ?></div>
@@ -134,13 +140,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                         <div class="info-row">
                             <div class="info-label">Diunggah Oleh</div>
                             <div class="info-value"><?= sanitize($arsip['uploader'] ?? '-') ?></div>
-                        </div>
-                        <?php if ($arsip['deskripsi']): ?>
-                        <div class="info-row">
-                            <div class="info-label">Keterangan</div>
-                            <div class="info-value" style="line-height:1.7"><?= nl2br(sanitize($arsip['deskripsi'])) ?></div>
-                        </div>
-                        <?php endif; ?>
+                        </div>                        
                     </div>
                 </div>
 
