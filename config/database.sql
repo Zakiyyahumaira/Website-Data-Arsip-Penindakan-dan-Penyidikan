@@ -46,12 +46,28 @@ CREATE TABLE IF NOT EXISTS kecamatan (
 );
 
 -- ============================================================
+-- TABEL PETUGAS
+-- ============================================================
+CREATE TABLE IF NOT EXISTS petugas (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    nama       VARCHAR(150) NOT NULL,
+    nip        VARCHAR(50)  NOT NULL,
+    pangkat    VARCHAR(100),
+    jabatan    VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by INT,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- ============================================================
 -- TABEL ARSIP UTAMA
 -- ============================================================
 CREATE TABLE IF NOT EXISTS arsip (
     id                   INT AUTO_INCREMENT PRIMARY KEY,
     no_surat             VARCHAR(50)  UNIQUE NOT NULL,
     nama_pegawai         VARCHAR(200) NOT NULL,
+    petugas_1_id         INT,
+    petugas_2_id         INT,
     deskripsi            TEXT,
     jenis_pelanggaran_id INT,
     wilayah_id           INT,
@@ -64,6 +80,8 @@ CREATE TABLE IF NOT EXISTS arsip (
     file_name            VARCHAR(255),
     diunggah_oleh        INT,
     created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (petugas_1_id)         REFERENCES petugas(id)   ON DELETE SET NULL,
+    FOREIGN KEY (petugas_2_id)         REFERENCES petugas(id)   ON DELETE SET NULL,
     FOREIGN KEY (jenis_pelanggaran_id) REFERENCES jenis_pelanggaran(id) ON DELETE SET NULL,
     FOREIGN KEY (wilayah_id)           REFERENCES wilayah(id)           ON DELETE SET NULL,
     FOREIGN KEY (kecamatan_id)         REFERENCES kecamatan(id)         ON DELETE SET NULL,
@@ -100,6 +118,13 @@ INSERT INTO jenis_pelanggaran (nama_pelanggaran, deskripsi) VALUES
 ('Pelanggaran Etika',          'Pelanggaran etika dan norma kedinasan'),
 ('Pelanggaran Jabatan',        'Pelanggaran dalam pelaksanaan tugas jabatan'),
 ('Lain-lain',                  'Pelanggaran di luar kategori di atas');
+
+-- ============================================================
+-- DATA AWAL: PETUGAS
+-- ============================================================
+INSERT INTO petugas (nama, nip, pangkat, jabatan, created_by) VALUES
+('Petugas 1', '1987654321', 'Penata Muda', 'Penyidik', NULL),
+('Petugas 2', '1987654322', 'Penata Muda Tingkat I', 'Penyidik', NULL);
 
 -- ============================================================
 -- DATA AWAL: WILAYAH

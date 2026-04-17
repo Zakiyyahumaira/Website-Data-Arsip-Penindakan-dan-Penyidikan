@@ -17,7 +17,17 @@ if (!$map) {
 }
 
 // Ambil arsip dalam map ini
-$arsips = getArsipByMap($pdo, $mapId);
+$stmt = $pdo->prepare(
+    "SELECT a.*, jp.nama_pelanggaran, p1.nama AS petugas_1, p2.nama AS petugas_2
+     FROM arsip a
+     LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
+     LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
+     LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
+     WHERE a.map_id = ?
+     ORDER BY a.created_at DESC"
+);
+$stmt->execute([$mapId]);
+$arsips = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -71,7 +81,7 @@ $arsips = getArsipByMap($pdo, $mapId);
                 <thead>
                     <tr>
                         <th>No. Surat</th>
-                        <th>Nama Pegawai</th>
+                        <th>Petugas</th>
                         <th>Jenis Pelanggaran</th>
                         <th>Jumlah</th>
                         <th>Tanggal Dokumen</th>
@@ -80,16 +90,11 @@ $arsips = getArsipByMap($pdo, $mapId);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($arsips as $a): 
-                        $jenis = $pdo->prepare("SELECT nama_pelanggaran FROM jenis_pelanggaran WHERE id = ?");
-                        $jenis->execute([$a['jenis_pelanggaran_id']]);
-                        $jenisRow = $jenis->fetch();
-                        $jenisName = $jenisRow['nama_pelanggaran'] ?? '-';
-                    ?>
+                    <?php foreach ($arsips as $a): ?>
                     <tr>
                         <td><?= sanitize($a['no_surat']) ?></td>
-                        <td><?= sanitize($a['nama_pegawai']) ?></td>
-                        <td><?= sanitize($jenisName) ?></td>
+                        <td><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></td>
+                        <td><?= sanitize($a['nama_pelanggaran'] ?? '') ?></td>
                         <td><?= formatJumlah($a['jumlah'], $a['satuan']) ?></td>
                         <td><?= formatTanggal($a['tanggal_dokumen']) ?></td>
                         <td>

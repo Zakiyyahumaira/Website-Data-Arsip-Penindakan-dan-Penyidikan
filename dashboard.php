@@ -12,8 +12,11 @@ $arsipBulanIni = $pdo->query("SELECT COUNT(*) FROM arsip WHERE MONTH(created_at)
 $totalMap = $pdo->query("SELECT COUNT(*) FROM map")->fetchColumn();
 
 $arsipTerbaru = $pdo->query(
-    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, m.nama_map, u.nama AS uploader
+    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, m.nama_map, u.nama AS uploader,
+            p1.nama AS petugas_1, p2.nama AS petugas_2
      FROM arsip a
+     LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
+     LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
      LEFT JOIN wilayah w            ON a.wilayah_id = w.id
      LEFT JOIN map m               ON a.map_id = m.id
@@ -90,7 +93,7 @@ $perWilayah = $pdo->query(
                     </div>
                     <div class="table-wrap">
                         <table>
-                            <thead><tr><th>No. Surat</th><th>Nama Pegawai</th><th>Map</th><th>Jenis Pelanggaran</th><th>Wilayah</th><th>Tanggal</th></tr></thead>
+                            <thead><tr><th>No. Surat</th><th>Petugas</th><th>Map</th><th>Jenis Pelanggaran</th><th>Wilayah</th><th>Tanggal</th></tr></thead>
                             <tbody>
                             <?php if (empty($arsipTerbaru)): ?>
                                 <tr><td colspan="5" style="text-align:center;color:#9ca3af;padding:30px">Belum ada arsip</td></tr>
@@ -98,7 +101,7 @@ $perWilayah = $pdo->query(
                                 <?php foreach ($arsipTerbaru as $a): ?>
                                 <tr>
                                     <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
-                                    <td><a href="arsip/detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['nama_pegawai']) ?></a></td>
+                                    <td><a href="arsip/detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                                     <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                     <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
                                     <td style="font-size:13px"><?= sanitize($a['nama_wilayah'] ?? '-') ?></td>

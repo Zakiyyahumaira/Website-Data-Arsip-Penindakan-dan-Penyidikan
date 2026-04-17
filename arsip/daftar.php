@@ -14,20 +14,26 @@ $offset    = ($page - 1) * $perPage;
 $where  = "WHERE 1=1";
 $params = [];
 if ($search) {
-    $where   .= " AND (a.nama_pegawai LIKE ? OR a.no_surat LIKE ? OR a.nama_tempat LIKE ?)";
-    $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%";
+    $where   .= " AND (a.nama_pegawai LIKE ? OR p1.nama LIKE ? OR p2.nama LIKE ? OR a.no_surat LIKE ? OR a.nama_tempat LIKE ?)";
+    $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%";
 }
 if ($jenisF)   { $where .= " AND a.jenis_pelanggaran_id = ?"; $params[] = $jenisF; }
 if ($wilayahF) { $where .= " AND a.wilayah_id = ?";           $params[] = $wilayahF; }
 
-$total     = $pdo->prepare("SELECT COUNT(*) FROM arsip a $where");
+$total     = $pdo->prepare("SELECT COUNT(*) FROM arsip a
+    LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
+    LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
+    $where");
 $total->execute($params);
 $total     = $total->fetchColumn();
 $totalPage = ceil($total / $perPage);
 
 $stmt = $pdo->prepare(
-    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, m.nama_map, u.nama AS uploader
+    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, m.nama_map, u.nama AS uploader,
+            p1.nama AS petugas_1, p2.nama AS petugas_2
      FROM arsip a
+     LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
+     LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
      LEFT JOIN wilayah w            ON a.wilayah_id = w.id
      LEFT JOIN kecamatan k          ON a.kecamatan_id = k.id
@@ -110,7 +116,7 @@ $msg = $_GET['msg'] ?? '';
                             <tr>
                                 <th style="width:40px">#</th>
                                 <th>No. Surat</th>
-                                <th>Nama Pegawai</th>
+                                <th>Petugas</th>
                                 <th>Map</th>
                                 <th>Jenis Pelanggaran</th>
                                 <th>Wilayah</th>
@@ -134,7 +140,7 @@ $msg = $_GET['msg'] ?? '';
                             <tr>
                                 <td style="color:#9ca3af"><?= $offset + $i + 1 ?></td>
                                 <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
-                                <td><a href="detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['nama_pegawai']) ?></a></td>
+                                <td><a href="detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                                 <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                 <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
                                 <td style="font-size:13px"><?= sanitize($a['nama_wilayah'] ?? '-') ?></td>
@@ -155,7 +161,7 @@ $msg = $_GET['msg'] ?? '';
                                     <div style="display:flex;gap:4px">
                                         <a href="detail.php?id=<?= $a['id'] ?>" class="btn btn-ghost btn-sm" title="Detail">&#128269;</a>
                                         <a href="edit.php?id=<?= $a['id'] ?>" class="btn btn-outline btn-sm" title="Edit">&#9998;</a>
-                                        <button onclick="konfirmasiHapus(<?= $a['id'] ?>, '<?= addslashes(sanitize($a['nama_pegawai'])) ?>')"
+                                        <button onclick="konfirmasiHapus(<?= $a['id'] ?>, '<?= addslashes(sanitize($a['petugas_1'] . ' / ' . $a['petugas_2'])) ?>')"
                                             class="btn btn-danger btn-sm" title="Hapus">&#128465;</button>
                                     </div>
                                 </td>

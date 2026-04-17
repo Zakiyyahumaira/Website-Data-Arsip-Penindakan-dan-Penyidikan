@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = $_POST;
 
     $noSurat       = trim($_POST['no_surat'] ?? '');
-    $namaPegawai   = trim($_POST['nama_pegawai'] ?? '');
     $deskripsi     = trim($_POST['deskripsi'] ?? '');
     $jenisId       = (int)($_POST['jenis_pelanggaran_id'] ?? 0);
     $wilayahId     = (int)($_POST['wilayah_id'] ?? 0);
@@ -23,19 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $satuan        = trim($_POST['satuan'] ?? '');
     $tglDokumen    = $_POST['tanggal_dokumen'] ?? '';
     $mapId         = (int)($_POST['map_id'] ?? 0);
+    $petugas1Id    = (int)($_POST['petugas_1_id'] ?? 0);
+    $petugas2Id    = (int)($_POST['petugas_2_id'] ?? 0);
 
     if (!$noSurat)     $errors[] = 'Nomor surat wajib diisi.';
     if (!$tglDokumen)  $errors[] = 'Tanggal dokumen wajib diisi.';
-    if (!$namaPegawai) $errors[] = 'Nama pegawai wajib diisi.';
+    if (!$petugas1Id)  $errors[] = 'Petugas 1 wajib dipilih.';
+    if (!$petugas2Id)  $errors[] = 'Petugas 2 wajib dipilih.';
+    if ($petugas1Id && $petugas2Id && $petugas1Id === $petugas2Id) $errors[] = 'Petugas 1 dan Petugas 2 tidak boleh sama.';
     if (!$mapId)       $errors[] = 'Map/folder wajib dipilih.';
     if (!$jenisId)     $errors[] = 'Jenis pelanggaran wajib dipilih.';
     if (!$wilayahId)   $errors[] = 'Wilayah wajib dipilih.';
     if (!$kecamatanId) $errors[] = 'Kecamatan wajib diisi.';
-    if (!$namaTempat) $errors[] = 'Nama tempat wajib diisi.';
-    if (!$jumlah) $errors[] = 'Jumlah wajib diisi.';
-    if (!$satuan) $errors[] = 'Satuan wajib diisi.';
-    if (!$mapId) $errors[] = 'Map wajib dipilih.';
-
+    if (!$namaTempat)  $errors[] = 'Nama tempat wajib diisi.';
+    if (!$jumlah)      $errors[] = 'Jumlah wajib diisi.';
+    if (!$satuan)      $errors[] = 'Satuan wajib diisi.';
+    if (!$mapId)       $errors[] = 'Map wajib dipilih.';
 
     if ($noSurat) {
         $cek = $pdo->prepare("SELECT id FROM arsip WHERE no_surat = ?");
@@ -52,15 +54,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+        $stmtPetugas1 = $pdo->prepare("SELECT nama FROM petugas WHERE id = ?");
+        $stmtPetugas1->execute([$petugas1Id]);
+        $petugas1 = $stmtPetugas1->fetch();
+
+        $stmtPetugas2 = $pdo->prepare("SELECT nama FROM petugas WHERE id = ?");
+        $stmtPetugas2->execute([$petugas2Id]);
+        $petugas2 = $stmtPetugas2->fetch();
+
+        $namaPegawai = $petugas1['nama'] . ' / ' . $petugas2['nama'];
+
         $stmt = $pdo->prepare(
             "INSERT INTO arsip
-             (map_id, no_surat, nama_pegawai, deskripsi, jenis_pelanggaran_id,
+             (map_id, no_surat, nama_pegawai, petugas_1_id, petugas_2_id, deskripsi, jenis_pelanggaran_id,
               wilayah_id, kecamatan_id, nama_tempat, jumlah, satuan,
               tanggal_dokumen, file_path, file_name, diunggah_oleh)
-             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         );
         $stmt->execute([
-            $mapId ?: null, $noSurat, $namaPegawai, $deskripsi, $jenisId,
+            $mapId ?: null, $noSurat, $namaPegawai, $petugas1Id ?: null, $petugas2Id ?: null,
+            $deskripsi, $jenisId,
             $wilayahId ?: null, $kecamatanId ?: null, $namaTempat,
             $jumlah, $satuan, $tglDokumen,
             $filePath, $fileName, $_SESSION['user_id']
@@ -75,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $jenisList = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
 $wilayahs  = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
 $maps      = [];
+$petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
 try {
     $maps = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
 } catch (PDOException $e) {
@@ -150,11 +164,29 @@ if (!empty($old['wilayah_id'])) {
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="nama_pegawai">Nama Pegawai <span style="color:#dc2626">*</span></label>
-                            <input class="form-control" type="text" id="nama_pegawai" name="nama_pegawai"
-                                   value="<?= sanitize($old['nama_pegawai'] ?? '') ?>"
-                                   placeholder="Nama lengkap pegawai yang bersangkutan" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="petugas_1_id">Petugas 1 <span style="color:#dc2626">*</span></label>
+                                <select class="form-control" id="petugas_1_id" name="petugas_1_id" required>
+                                    <option value="">-- Pilih Petugas 1 --</option>
+                                    <?php foreach ($petugasList as $p): ?>
+                                    <option value="<?= $p['id'] ?>" <?= ($old['petugas_1_id'] ?? '') == $p['id'] ? 'selected' : '' ?>>
+                                        <?= sanitize($p['nama']) ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="petugas_2_id">Petugas 2 <span style="color:#dc2626">*</span></label>
+                                <select class="form-control" id="petugas_2_id" name="petugas_2_id" required>
+                                    <option value="">-- Pilih Petugas 2 --</option>
+                                    <?php foreach ($petugasList as $p): ?>
+                                    <option value="<?= $p['id'] ?>" <?= ($old['petugas_2_id'] ?? '') == $p['id'] ? 'selected' : '' ?>>
+                                        <?= sanitize($p['nama']) ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">

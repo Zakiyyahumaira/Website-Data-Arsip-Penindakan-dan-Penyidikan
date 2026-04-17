@@ -16,7 +16,8 @@ if ($arsip) {
     if ($arsip['file_path'] && file_exists('../' . $arsip['file_path'])) {
         @unlink('../' . $arsip['file_path']);
     }
-    logAktivitas($pdo, $_SESSION['user_id'], 'Hapus arsip: ' . $arsip['nama_pegawai'], $id);
+    $petugasNama = ($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-');
+    logAktivitas($pdo, $_SESSION['user_id'], 'Hapus arsip: ' . $petugasNama, $id);
     $pdo->prepare("DELETE FROM arsip WHERE id = ?")->execute([$id]);
 }
 

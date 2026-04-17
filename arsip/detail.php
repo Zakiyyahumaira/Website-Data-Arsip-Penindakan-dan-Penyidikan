@@ -8,8 +8,12 @@ $id = (int)($_GET['id'] ?? 0);
 if (!$id) { header('Location: daftar.php'); exit; }
 
 $stmt = $pdo->prepare(
-    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, u.nama AS uploader
+    "SELECT a.*, jp.nama_pelanggaran, w.nama_wilayah, k.nama_kecamatan, u.nama AS uploader,
+            p1.nama AS petugas_1, p1.nip AS petugas_1_nip, p1.pangkat AS petugas_1_pangkat, p1.jabatan AS petugas_1_jabatan,
+            p2.nama AS petugas_2, p2.nip AS petugas_2_nip, p2.pangkat AS petugas_2_pangkat, p2.jabatan AS petugas_2_jabatan
      FROM arsip a
+     LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
+     LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
      LEFT JOIN wilayah w            ON a.wilayah_id = w.id
      LEFT JOIN kecamatan k          ON a.kecamatan_id = k.id
@@ -20,7 +24,7 @@ $stmt->execute([$id]);
 $arsip = $stmt->fetch();
 if (!$arsip) { header('Location: daftar.php'); exit; }
 
-logAktivitas($pdo, $_SESSION['user_id'], 'Lihat arsip: ' . $arsip['nama_pegawai'], $id);
+logAktivitas($pdo, $_SESSION['user_id'], 'Lihat arsip: ' . ($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-'), $id);
 
 $ext = strtolower(pathinfo($arsip['file_name'] ?? '', PATHINFO_EXTENSION));
 $fileIcons = ['pdf'=>'📄','doc'=>'📝','docx'=>'📝','xls'=>'📊','xlsx'=>'📊','jpg'=>'🖼','jpeg'=>'🖼','png'=>'🖼'];
@@ -31,7 +35,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= sanitize($arsip['nama_pegawai']) ?> — Arsip Kantor</title>
+    <title><?= sanitize(($arsip['petugas_1'] ?? '-') . ' / ' . ($arsip['petugas_2'] ?? '-')) ?> — Arsip Kantor</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .info-row { display:flex; border-bottom:1px solid #f3f4f6; padding:12px 0; gap:16px; }
@@ -49,7 +53,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
             <div class="topbar-actions">
                 <a href="daftar.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>
                 <a href="edit.php?id=<?= $arsip['id'] ?>" class="btn btn-outline btn-sm">&#9998; Edit</a>
-                <button onclick="konfirmasiHapus(<?= $arsip['id'] ?>, '<?= addslashes(sanitize($arsip['nama_pegawai'])) ?>')"
+                <button onclick="konfirmasiHapus(<?= $arsip['id'] ?>, '<?= addslashes(sanitize(($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-'))) ?>')"
                     class="btn btn-danger btn-sm">&#128465; Hapus</button>
             </div>
         </div>
@@ -61,7 +65,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <h3><?= sanitize($arsip['nama_pegawai']) ?></h3>
+                            <h3><?= sanitize(($arsip['petugas_1'] ?? '-') . ' / ' . ($arsip['petugas_2'] ?? '-')) ?></h3>
                             <code style="font-size:12px;background:#f3f4f6;padding:2px 8px;border-radius:4px;margin-top:4px;display:inline-block">
                                 <?= sanitize($arsip['no_surat']) ?>
                             </code>
@@ -74,8 +78,22 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                             <div class="info-value"><code><?= sanitize($arsip['no_surat']) ?></code></div>
                         </div>
                         <div class="info-row">
-                            <div class="info-label">Nama Pegawai</div>
-                            <div class="info-value"><strong><?= sanitize($arsip['nama_pegawai']) ?></strong></div>
+                            <div class="info-label">Petugas 1</div>
+                            <div class="info-value">
+                                <strong><?= sanitize($arsip['petugas_1'] ?? $arsip['nama_pegawai']) ?></strong><br>
+                                <small>NIP: <?= sanitize($arsip['petugas_1_nip'] ?? '-') ?></small><br>
+                                <small>Pangkat: <?= sanitize($arsip['petugas_1_pangkat'] ?? '-') ?></small><br>
+                                <small>Jabatan: <?= sanitize($arsip['petugas_1_jabatan'] ?? '-') ?></small>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Petugas 2</div>
+                            <div class="info-value">
+                                <strong><?= sanitize($arsip['petugas_2'] ?? '-') ?></strong><br>
+                                <small>NIP: <?= sanitize($arsip['petugas_2_nip'] ?? '-') ?></small><br>
+                                <small>Pangkat: <?= sanitize($arsip['petugas_2_pangkat'] ?? '-') ?></small><br>
+                                <small>Jabatan: <?= sanitize($arsip['petugas_2_jabatan'] ?? '-') ?></small>
+                            </div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">Jenis Pelanggaran</div>
@@ -151,7 +169,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                         <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
                             <a href="edit.php?id=<?= $arsip['id'] ?>" class="btn btn-outline" style="justify-content:center">&#9998; Edit Arsip</a>
                             <button onclick="window.print()" class="btn btn-ghost" style="justify-content:center">&#128424; Cetak Detail</button>
-                            <button onclick="konfirmasiHapus(<?= $arsip['id'] ?>, '<?= addslashes(sanitize($arsip['nama_pegawai'])) ?>')"
+                            <button onclick="konfirmasiHapus(<?= $arsip['id'] ?>, '<?= addslashes(sanitize(($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-'))) ?>')"
                                 class="btn btn-danger" style="justify-content:center">&#128465; Hapus Arsip</button>
                         </div>
                     </div>

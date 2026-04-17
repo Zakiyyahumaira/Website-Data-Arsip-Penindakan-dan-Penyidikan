@@ -16,7 +16,8 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $noSurat     = trim($_POST['no_surat'] ?? '');
-    $namaPegawai = trim($_POST['nama_pegawai'] ?? '');
+    $petugas1Id  = (int)($_POST['petugas_1_id'] ?? 0);
+    $petugas2Id  = (int)($_POST['petugas_2_id'] ?? 0);
     $deskripsi   = trim($_POST['deskripsi'] ?? '');
     $jenisId     = (int)($_POST['jenis_pelanggaran_id'] ?? 0);
     $wilayahId   = (int)($_POST['wilayah_id'] ?? 0);
@@ -26,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $satuan      = trim($_POST['satuan'] ?? '');
     $tglDokumen  = $_POST['tanggal_dokumen'] ?? '';
 
-    if (!$noSurat)     $errors[] = 'Nomor surat wajib diisi.';
-    if (!$namaPegawai) $errors[] = 'Nama pegawai wajib diisi.';
-    if (!$jenisId)     $errors[] = 'Jenis pelanggaran wajib dipilih.';
-    if (!$wilayahId)   $errors[] = 'Wilayah wajib dipilih.';
+    if (!$noSurat)      $errors[] = 'Nomor surat wajib diisi.';
+    if (!$petugas1Id)   $errors[] = 'Petugas 1 wajib dipilih.';
+    if (!$petugas2Id)   $errors[] = 'Petugas 2 wajib dipilih.';
+    if ($petugas1Id && $petugas2Id && $petugas1Id === $petugas2Id) $errors[] = 'Petugas 1 dan Petugas 2 tidak boleh sama.';
+    if (!$jenisId)      $errors[] = 'Jenis pelanggaran wajib dipilih.';
+    if (!$wilayahId)    $errors[] = 'Wilayah wajib dipilih.';
 
     if ($noSurat && $noSurat !== $arsip['no_surat']) {
         $cek = $pdo->prepare("SELECT id FROM arsip WHERE no_surat = ? AND id != ?");
@@ -51,15 +54,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+        $stmtPetugas1 = $pdo->prepare("SELECT nama FROM petugas WHERE id = ?");
+        $stmtPetugas1->execute([$petugas1Id]);
+        $petugas1 = $stmtPetugas1->fetch();
+
+        $stmtPetugas2 = $pdo->prepare("SELECT nama FROM petugas WHERE id = ?");
+        $stmtPetugas2->execute([$petugas2Id]);
+        $petugas2 = $stmtPetugas2->fetch();
+
+        $namaPegawai = $petugas1['nama'] . ' / ' . $petugas2['nama'];
+
         $stmt = $pdo->prepare(
             "UPDATE arsip SET
-             no_surat=?, nama_pegawai=?, deskripsi=?, jenis_pelanggaran_id=?,
+             no_surat=?, nama_pegawai=?, petugas_1_id=?, petugas_2_id=?, deskripsi=?, jenis_pelanggaran_id=?,
              wilayah_id=?, kecamatan_id=?, nama_tempat=?, jumlah=?, satuan=?,
              tanggal_dokumen=?, file_path=?, file_name=?
              WHERE id=?"
         );
         $stmt->execute([
-            $noSurat, $namaPegawai, $deskripsi, $jenisId,
+            $noSurat, $namaPegawai, $petugas1Id ?: null, $petugas2Id ?: null,
+            $deskripsi, $jenisId,
             $wilayahId ?: null, $kecamatanId ?: null, $namaTempat,
             $jumlah, $satuan, $tglDokumen ?: null,
             $filePath, $fileName, $id
@@ -75,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $jenisList  = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
 $wilayahs   = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
+$petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
 $kecamatans = $arsip['wilayah_id'] ? getKecamatanByWilayah($pdo, $arsip['wilayah_id']) : [];
 ?>
 <!DOCTYPE html>
@@ -123,10 +138,29 @@ $kecamatans = $arsip['wilayah_id'] ? getKecamatanByWilayah($pdo, $arsip['wilayah
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Nama Pegawai *</label>
-                            <input class="form-control" type="text" name="nama_pegawai"
-                                   value="<?= sanitize($arsip['nama_pegawai']) ?>" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Petugas 1 *</label>
+                                <select class="form-control" name="petugas_1_id" required>
+                                    <option value="">-- Pilih Petugas 1 --</option>
+                                    <?php foreach ($petugasList as $p): ?>
+                                    <option value="<?= $p['id'] ?>" <?= ($arsip['petugas_1_id'] ?? '') == $p['id'] ? 'selected' : '' ?>>
+                                        <?= sanitize($p['nama']) ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Petugas 2 *</label>
+                                <select class="form-control" name="petugas_2_id" required>
+                                    <option value="">-- Pilih Petugas 2 --</option>
+                                    <?php foreach ($petugasList as $p): ?>
+                                    <option value="<?= $p['id'] ?>" <?= ($arsip['petugas_2_id'] ?? '') == $p['id'] ? 'selected' : '' ?>>
+                                        <?= sanitize($p['nama']) ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
