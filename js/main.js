@@ -9,6 +9,24 @@ function konfirmasiHapus(id, judul) {
     }
 }
 
+/* ── Konfirmasi hapus log aktivitas ──────────────────── */
+function konfirmasiHapusLog(id) {
+    console.log('konfirmasiHapusLog called with id:', id);
+    if (confirm('Hapus log aktivitas ini?\nTindakan ini tidak bisa dibatalkan.')) {
+        console.log('User confirmed, redirecting to:', 'hapus_log.php?action=single&id=' + id);
+        window.location.href = 'hapus_log.php?action=single&id=' + id;
+    }
+}
+
+/* ── Konfirmasi hapus semua log ──────────────────────── */
+function konfirmasiHapusSemuaLog() {
+    console.log('konfirmasiHapusSemuaLog called');
+    if (confirm('Hapus SEMUA log aktivitas?\nTindakan ini tidak bisa dibatalkan dan tidak dapat dikembalikan!')) {
+        console.log('User confirmed, redirecting to:', 'hapus_log.php?action=all');
+        window.location.href = 'hapus_log.php?action=all';
+    }
+}
+
 /* ── Live search pada tabel ──────────────────────────── */
 function initTableSearch(inputId, tableId) {
     const input = document.getElementById(inputId);
