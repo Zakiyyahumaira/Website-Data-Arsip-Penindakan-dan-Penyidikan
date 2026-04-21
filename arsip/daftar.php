@@ -4,8 +4,6 @@ require '../config/database.php';
 require '../config/functions.php';
 cekLogin();
 
-#tesss
-
 $search    = trim($_GET['q'] ?? '');
 $jenisF    = (int)($_GET['jenis'] ?? 0);
 $wilayahF  = (int)($_GET['wilayah'] ?? 0);
