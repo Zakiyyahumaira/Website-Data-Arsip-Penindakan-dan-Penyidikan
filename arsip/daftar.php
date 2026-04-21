@@ -4,9 +4,12 @@ require '../config/database.php';
 require '../config/functions.php';
 cekLogin();
 
+#tesss
+
 $search    = trim($_GET['q'] ?? '');
 $jenisF    = (int)($_GET['jenis'] ?? 0);
 $wilayahF  = (int)($_GET['wilayah'] ?? 0);
+$mapF      = (int)($_GET['map'] ?? 0);
 $page      = max(1, (int)($_GET['page'] ?? 1));
 $perPage   = 15;
 $offset    = ($page - 1) * $perPage;
@@ -14,15 +17,17 @@ $offset    = ($page - 1) * $perPage;
 $where  = "WHERE 1=1";
 $params = [];
 if ($search) {
-    $where   .= " AND (a.nama_pegawai LIKE ? OR p1.nama LIKE ? OR p2.nama LIKE ? OR a.no_surat LIKE ? OR a.nama_tempat LIKE ?)";
-    $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%";
+    $where   .= " AND (a.nama_pegawai LIKE ? OR p1.nama LIKE ? OR p2.nama LIKE ? OR a.no_surat LIKE ? OR a.nama_tempat LIKE ? OR m.nama_map LIKE ?)";
+    $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%"; $params[] = "%$search%";
 }
 if ($jenisF)   { $where .= " AND a.jenis_pelanggaran_id = ?"; $params[] = $jenisF; }
 if ($wilayahF) { $where .= " AND a.wilayah_id = ?";           $params[] = $wilayahF; }
+if ($mapF)     { $where .= " AND a.map_id = ?";               $params[] = $mapF; }
 
 $total     = $pdo->prepare("SELECT COUNT(*) FROM arsip a
     LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
     LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
+    LEFT JOIN map m ON a.map_id = m.id
     $where");
 $total->execute($params);
 $total     = $total->fetchColumn();
@@ -48,6 +53,7 @@ $arsips = $stmt->fetchAll();
 
 $jenisList = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
 $wilayahs  = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
+$mapsList  = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
 $msg = $_GET['msg'] ?? '';
 ?>
 <!DOCTYPE html>
@@ -101,8 +107,16 @@ $msg = $_GET['msg'] ?? '';
                             </option>
                             <?php endforeach; ?>
                         </select>
+                        <select class="form-control" name="map" onchange="this.form.submit()" style="width:auto">
+                            <option value="">Semua Map</option>
+                            <?php foreach ($mapsList as $m): ?>
+                            <option value="<?= $m['id'] ?>" <?= $mapF == $m['id'] ? 'selected' : '' ?>>
+                                <?= sanitize($m['nama_map']) ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
                         <button type="submit" class="btn btn-primary btn-sm">Cari</button>
-                        <?php if ($search || $jenisF || $wilayahF): ?>
+                        <?php if ($search || $jenisF || $wilayahF || $mapF): ?>
                         <a href="daftar.php" class="btn btn-ghost btn-sm">Reset</a>
                         <?php endif; ?>
                     </form>
@@ -177,14 +191,14 @@ $msg = $_GET['msg'] ?? '';
                 <div style="padding:16px 20px;border-top:1px solid #e5e7eb">
                     <div class="pagination">
                         <?php if ($page > 1): ?>
-                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&page=<?= $page-1 ?>" class="page-btn">&lsaquo; Sebelumnya</a>
+                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&map=<?= $mapF ?>&page=<?= $page-1 ?>" class="page-btn">&lsaquo; Sebelumnya</a>
                         <?php endif; ?>
                         <?php for ($p = max(1,$page-2); $p <= min($totalPage,$page+2); $p++): ?>
-                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&page=<?= $p ?>"
+                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&map=<?= $mapF ?>&page=<?= $p ?>"
                            class="page-btn <?= $p==$page?'active':'' ?>"><?= $p ?></a>
                         <?php endfor; ?>
                         <?php if ($page < $totalPage): ?>
-                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&page=<?= $page+1 ?>" class="page-btn">Berikutnya &rsaquo;</a>
+                        <a href="?q=<?= urlencode($search) ?>&jenis=<?= $jenisF ?>&wilayah=<?= $wilayahF ?>&map=<?= $mapF ?>&page=<?= $page+1 ?>" class="page-btn">Berikutnya &rsaquo;</a>
                         <?php endif; ?>
                         <span style="font-size:13px;color:#6b7280;margin-left:8px">Halaman <?= $page ?> dari <?= $totalPage ?></span>
                     </div>
