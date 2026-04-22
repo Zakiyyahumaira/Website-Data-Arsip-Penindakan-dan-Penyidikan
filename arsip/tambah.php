@@ -353,18 +353,19 @@ if (!empty($old['wilayah_id'])) {
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="nama_tempat">Nama Tempat <span style="color:#dc2626">*</span> </label>
-                            <input class="form-control" type="text" id="nama_tempat" name="nama_tempat" 
-                                   value="<?= sanitize($old['nama_tempat'] ?? '') ?>"
-                                   placeholder="Nama tempat kejadian penindakan" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="waktu_penindakan">Waktu Penindakan <span style="color:#dc2626">*</span></label>
-                            <input class="form-control" type="time" id="waktu_penindakan" name="waktu_penindakan"
-                                   value="<?= $old['waktu_penindakan'] ?? '' ?>" required>
-                            <div class="form-hint">Format: HH:MM WIB</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="nama_tempat">Nama Tempat <span style="color:#dc2626">*</span> </label>
+                                <input class="form-control" type="text" id="nama_tempat" name="nama_tempat" 
+                                    value="<?= sanitize($old['nama_tempat'] ?? '') ?>"
+                                    placeholder="Nama tempat kejadian penindakan" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="waktu_penindakan">Waktu Penindakan (Tempus) <span style="color:#dc2626">*</span></label>
+                                <input class="form-control" type="time" id="waktu_penindakan" name="waktu_penindakan"
+                                    value="<?= $old['waktu_penindakan'] ?? '' ?>" required>
+                                <div class="form-hint">Format: HH:MM WIB</div>
+                            </div>
                         </div>
 
                         <!-- Section: Data Pelaku -->
