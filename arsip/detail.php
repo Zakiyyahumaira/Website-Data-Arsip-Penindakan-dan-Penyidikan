@@ -24,6 +24,16 @@ $stmt->execute([$id]);
 $arsip = $stmt->fetch();
 if (!$arsip) { header('Location: daftar.php'); exit; }
 
+// Ambil data pelaku
+$pelakuList = $pdo->prepare("SELECT * FROM pelaku WHERE arsip_id = ? ORDER BY id");
+$pelakuList->execute([$id]);
+$pelakuList = $pelakuList->fetchAll();
+
+// Ambil data barang hasil penindakan
+$barangList = $pdo->prepare("SELECT * FROM barang_hasil_penindakan WHERE arsip_id = ? ORDER BY id");
+$barangList->execute([$id]);
+$barangList = $barangList->fetchAll();
+
 logAktivitas($pdo, $_SESSION['user_id'], 'Lihat arsip: ' . ($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-'), $id);
 
 $ext = strtolower(pathinfo($arsip['file_name'] ?? '', PATHINFO_EXTENSION));
@@ -42,6 +52,10 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
         .info-row:last-child { border-bottom:none; }
         .info-label { width:180px; flex-shrink:0; font-size:13px; font-weight:600; color:#6b7280; }
         .info-value { flex:1; font-size:14px; color:#1f2937; }
+        .table-list { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; }
+        .table-list th { background:#f3f4f6; padding:8px; text-align:left; font-weight:600; border:1px solid #e5e7eb; }
+        .table-list td { padding:8px; border:1px solid #e5e7eb; }
+        .table-list tr:nth-child(even) { background:#fafafa; }
     </style>
 </head>
 <body>
@@ -114,6 +128,10 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                             <div class="info-value"><?= $arsip['nama_tempat'] ? sanitize($arsip['nama_tempat']) : '<span style="color:#9ca3af">-</span>' ?></div>
                         </div>
                         <div class="info-row">
+                            <div class="info-label">Waktu Penindakan</div>
+                            <div class="info-value"><?= $arsip['waktu_penindakan'] ? sanitize($arsip['waktu_penindakan']) . ' WIB' : '<span style="color:#9ca3af">-</span>' ?></div>
+                        </div>
+                        <div class="info-row">
                             <div class="info-label">Jumlah</div>
                             <div class="info-value">
                                 <?php if ($arsip['jumlah'] !== null): ?>
@@ -140,7 +158,65 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                         <div class="info-row">
                             <div class="info-label">Diunggah Oleh</div>
                             <div class="info-value"><?= sanitize($arsip['uploader'] ?? '-') ?></div>
-                        </div>                        
+                        </div>
+                        
+                        <!-- Data Pelaku -->
+                        <?php if (!empty($pelakuList)): ?>
+                        <div style="margin-top:20px;padding-top:20px;border-top:2px solid #e5e7eb">
+                            <h4 style="margin:0 0 12px 0;color:#1f2937">👤 Data Pelaku</h4>
+                            <table class="table-list">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Identitas</th>
+                                        <th>No. Identitas</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Alamat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($pelakuList as $p): ?>
+                                    <tr>
+                                        <td><?= sanitize($p['nama']) ?></td>
+                                        <td><?= sanitize($p['identitas']) ?></td>
+                                        <td><?= sanitize($p['no_identitas']) ?></td>
+                                        <td><?= sanitize($p['jenis_kelamin']) ?></td>
+                                        <td><?= sanitize($p['alamat']) ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- Data Barang Hasil Penindakan -->
+                        <?php if (!empty($barangList)): ?>
+                        <div style="margin-top:20px;padding-top:20px;border-top:2px solid #e5e7eb">
+                            <h4 style="margin:0 0 12px 0;color:#1f2937">📦 Barang Hasil Penindakan</h4>
+                            <table class="table-list">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Barang</th>
+                                        <th>Jenis Barang</th>
+                                        <th>Jumlah</th>
+                                        <th>Satuan</th>
+                                        <th>Jenis Uraian Barang</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($barangList as $b): ?>
+                                    <tr>
+                                        <td><?= sanitize($b['nama_barang']) ?></td>
+                                        <td><?= sanitize($b['jenis_barang']) ?></td>
+                                        <td><?= formatJumlah($b['jumlah_barang']) ?></td>
+                                        <td><?= sanitize($b['satuan']) ?></td>
+                                        <td><?= sanitize($b['jenis_uraian_barang'] ?? '-') ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php endif; ?>                        
                     </div>
                 </div>
 
