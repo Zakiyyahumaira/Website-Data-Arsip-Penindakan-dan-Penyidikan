@@ -231,6 +231,7 @@ if (!empty($old['wilayah_id'])) {
         .repeat-field textarea { width: 100%; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
         .repeat-field textarea { min-height: 80px; resize: vertical; }
         .repeat-field-inline { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+        .repeat-field-2col { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
         .btn-remove { padding: 8px 12px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
         .btn-remove:hover { background: #991b1b; }
         .btn-add { padding: 10px 14px; background: #059669; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 8px; }
@@ -394,20 +395,22 @@ if (!empty($old['wilayah_id'])) {
                                         <span>Pelaku #<?= $i + 1 ?></span>
                                         <button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button>
                                     </div>
-                                    <div class="repeat-field repeat-field-inline">
-                                        <div>
+                                    <div class="repeat-field-2col">
+                                        <div class="repeat-field">
                                             <label>Nama <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_pelaku[]" value="<?= $namaPelakuVal ?>" placeholder="Nama lengkap">
                                         </div>
-                                        <div>
+                                        <div class="repeat-field">
                                             <label>Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="identitas_pelaku[]" value="<?= $identitasVal ?>" placeholder="Misal: KTP, SIM">
                                         </div>
-                                        <div>
+                                    </div>
+                                    <div class="repeat-field-2col">
+                                        <div class="repeat-field">
                                             <label>No. Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="no_identitas_pelaku[]" value="<?= $noIdentitasVal ?>" placeholder="No. identitas">
                                         </div>
-                                        <div>
+                                        <div class="repeat-field">
                                             <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
                                             <select name="jenis_kelamin_pelaku[]">
                                                 <option value="">Pilih</option>
@@ -428,7 +431,7 @@ if (!empty($old['wilayah_id'])) {
 
                         <!-- Section: Barang Hasil Penindakan -->
                         <div class="form-section">
-                            <label style="font-size: 15px; color: black; font-weight: 600">📦 Barang Hasil Penindakan</label>
+                            <label style="font-size: 15px; color: black; font-weight: 600">Barang Hasil Penindakan</label>
                             <div class="repeat-section" id="barangContainer">
                                 <?php
                                 $barangCount = max(1, count($old['nama_barang'] ?? []));
@@ -444,20 +447,22 @@ if (!empty($old['wilayah_id'])) {
                                         <span>Barang #<?= $i + 1 ?></span>
                                         <button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button>
                                     </div>
-                                    <div class="repeat-field repeat-field-inline">
-                                        <div>
+                                    <div class="repeat-field-2col">
+                                        <div class="repeat-field">
                                             <label>Nama Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_barang[]" value="<?= $namaBarangVal ?>" placeholder="Nama barang">
                                         </div>
-                                        <div>
+                                        <div class="repeat-field">
                                             <label>Jenis Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="jenis_barang[]" value="<?= $jenisBarangVal ?>" placeholder="Jenis">
                                         </div>
-                                        <div>
+                                    </div>
+                                    <div class="repeat-field-2col">
+                                        <div class="repeat-field">
                                             <label>Jumlah <span style="color:#dc2626">*</span></label>
                                             <input type="number" name="jumlah_barang[]" step="0.01" min="0" value="<?= $jumlahBarangVal ?>" placeholder="Jumlah">
                                         </div>
-                                        <div>
+                                        <div class="repeat-field">
                                             <label>Satuan <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="satuan_barang[]" value="<?= $satuanBarangVal ?>" placeholder="Satuan">
                                         </div>
@@ -516,20 +521,22 @@ function addPelaku() {
             <span>Pelaku #${index}</span>
             <button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button>
         </div>
-        <div class="repeat-field repeat-field-inline">
-            <div>
+        <div class="repeat-field-2col">
+            <div class="repeat-field">
                 <label>Nama <span style="color:#dc2626">*</span></label>
                 <input type="text" name="nama_pelaku[]" placeholder="Nama lengkap">
             </div>
-            <div>
+            <div class="repeat-field">
                 <label>Identitas <span style="color:#dc2626">*</span></label>
                 <input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM">
             </div>
-            <div>
+        </div>
+        <div class="repeat-field-2col">
+            <div class="repeat-field">
                 <label>No. Identitas <span style="color:#dc2626">*</span></label>
                 <input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas">
             </div>
-            <div>
+            <div class="repeat-field">
                 <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
                 <select name="jenis_kelamin_pelaku[]">
                     <option value="">Pilih</option>
@@ -566,20 +573,22 @@ function addBarang() {
             <span>Barang #${index}</span>
             <button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button>
         </div>
-        <div class="repeat-field repeat-field-inline">
-            <div>
+        <div class="repeat-field-2col">
+            <div class="repeat-field">
                 <label>Nama Barang <span style="color:#dc2626">*</span></label>
                 <input type="text" name="nama_barang[]" placeholder="Nama barang">
             </div>
-            <div>
+            <div class="repeat-field">
                 <label>Jenis Barang <span style="color:#dc2626">*</span></label>
                 <input type="text" name="jenis_barang[]" placeholder="Jenis">
             </div>
-            <div>
+        </div>
+        <div class="repeat-field-2col">
+            <div class="repeat-field">
                 <label>Jumlah <span style="color:#dc2626">*</span></label>
                 <input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah">
             </div>
-            <div>
+            <div class="repeat-field">
                 <label>Satuan <span style="color:#dc2626">*</span></label>
                 <input type="text" name="satuan_barang[]" placeholder="Satuan">
             </div>
