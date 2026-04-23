@@ -228,15 +228,20 @@ $barangList = $barangList->fetchAll();
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .form-section { margin-top: 24px; padding-top: 16px; border-top: 2px solid #e5e7eb; }
-        .table-container { overflow-x: auto; margin-top: 8px; }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .data-table th { background: #f3f4f6; padding: 8px; text-align: left; font-weight: 600; border: 1px solid #d1d5db; }
-        .data-table td { padding: 8px; border: 1px solid #d1d5db; }
-        .data-table input { width: 100%; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; }
-        .data-table select { width: 100%; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; }
-        .btn-remove { padding: 4px 8px; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .repeat-section { margin-top: 12px; }
+        .entry-card { border: 1px solid #d1d5db; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ffffff; }
+        .entry-header { font-weight: 700; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .entry-header span { color: #111827; }
+        .repeat-field { margin-bottom: 12px; }
+        .repeat-field label { display: block; margin-bottom: 6px; font-weight: 600; }
+        .repeat-field input,
+        .repeat-field select,
+        .repeat-field textarea { width: 100%; padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+        .repeat-field textarea { min-height: 80px; resize: vertical; }
+        .repeat-field-inline { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+        .btn-remove { padding: 8px 12px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
         .btn-remove:hover { background: #991b1b; }
-        .btn-add { padding: 8px 12px; background: #059669; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+        .btn-add { padding: 10px 14px; background: #059669; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 8px; }
         .btn-add:hover { background: #047857; }
     </style>
 </head>
@@ -260,7 +265,7 @@ $barangList = $barangList->fetchAll();
             </div>
             <?php endif; ?>
 
-            <div class="card" style="max-width:820px">
+            <div class="card" style="max-width:1000px">
                 <div class="card-header"><h3>Edit Data Arsip</h3></div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
@@ -315,18 +320,21 @@ $barangList = $barangList->fetchAll();
                             </select>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Wilayah *</label>
-                                <select class="form-control" name="wilayah_id" id="wilayah_id" required
-                                        onchange="loadKecamatan(this.value)">
-                                    <option value="">-- Pilih Wilayah --</option>
-                                    <?php foreach ($wilayahs as $w): ?>
-                                    <option value="<?= $w['id'] ?>" <?= $arsip['wilayah_id'] == $w['id'] ? 'selected' : '' ?>>
-                                        <?= sanitize($w['nama_wilayah']) ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                        <!-- Wilayah & Kecamatan -->
+                        <div class="form-section">
+                            <label class="form-label" for="map_id" style="font-size: 15px; color: black" > Lokasi (Locus) </label>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Wilayah *</label>
+                                    <select class="form-control" name="wilayah_id" id="wilayah_id" required
+                                            onchange="loadKecamatan(this.value)">
+                                        <option value="">-- Pilih Wilayah --</option>
+                                        <?php foreach ($wilayahs as $w): ?>
+                                        <option value="<?= $w['id'] ?>" <?= $arsip['wilayah_id'] == $w['id'] ? 'selected' : '' ?>>
+                                            <?= sanitize($w['nama_wilayah']) ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Kecamatan</label>
@@ -341,99 +349,100 @@ $barangList = $barangList->fetchAll();
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Nama Tempat</label>
-                            <input class="form-control" type="text" name="nama_tempat"
-                                   value="<?= sanitize($arsip['nama_tempat'] ?? '') ?>"
-                                   placeholder="Nama tempat kejadian / instansi">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Waktu Penindakan (WIB) *</label>
-                            <input class="form-control" type="time" name="waktu_penindakan"
-                                   value="<?= sanitize($arsip['waktu_penindakan'] ?? '') ?>" required>
-                            <div class="form-hint">Format: HH:MM (Contoh: 14:30)</div>
-                        </div>
-
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="form-label">Jumlah</label>
-                                <input class="form-control" type="number" name="jumlah"
-                                       step="0.01" min="0"
-                                       value="<?= sanitize($arsip['jumlah'] ?? '') ?>">
+                                <label class="form-label">Nama Tempat</label>
+                                <input class="form-control" type="text" name="nama_tempat"
+                                    value="<?= sanitize($arsip['nama_tempat'] ?? '') ?>"
+                                    placeholder="Nama tempat kejadian / instansi">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Satuan</label>
-                                <input class="form-control" type="text" name="satuan"
-                                       value="<?= sanitize($arsip['satuan'] ?? '') ?>"
-                                       placeholder="Rupiah, Hari, Lembar, dst.">
+                                <label class="form-label">Waktu Penindakan (WIB) *</label>
+                                <input class="form-control" type="time" name="waktu_penindakan"
+                                    value="<?= sanitize($arsip['waktu_penindakan'] ?? '') ?>" required>
+                                <div class="form-hint">Format: HH:MM (Contoh: 14:30)</div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Keterangan / Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi"><?= sanitize($arsip['deskripsi'] ?? '') ?></textarea>
                         </div>
 
                         <!-- Section: Data Pelaku -->
                         <div class="form-section">
                             <label style="font-size: 15px; color: black; font-weight: 600">👤 Data Pelaku</label>
-                            
-                            <div class="table-container">
-                                <table class="data-table" id="tablePelaku">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%">No</th>
-                                            <th style="width: 15%">Nama <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 12%">Identitas <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 14%">No. Identitas <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 12%">Jenis Kelamin <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 35%">Alamat <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 7%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="bodyPelaku">
-                                        <?php 
-                                        if (!empty($pelakuList)) {
-                                            foreach ($pelakuList as $idx => $p):
-                                        ?>
-                                        <tr class="row-pelaku" data-idx="<?= $idx ?>">
-                                            <td><?= $idx + 1 ?></td>
-                                            <td><input type="text" name="nama_pelaku[]" value="<?= sanitize($p['nama'] ?? '') ?>" placeholder="Nama lengkap"></td>
-                                            <td><input type="text" name="identitas_pelaku[]" value="<?= sanitize($p['identitas'] ?? '') ?>" placeholder="Misal: KTP, SIM"></td>
-                                            <td><input type="text" name="no_identitas_pelaku[]" value="<?= sanitize($p['no_identitas'] ?? '') ?>" placeholder="No. identitas"></td>
-                                            <td>
-                                                <select name="jenis_kelamin_pelaku[]">
-                                                    <option value="">Pilih</option>
-                                                    <option value="Laki-laki" <?= ($p['jenis_kelamin'] ?? '') === 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
-                                                    <option value="Perempuan" <?= ($p['jenis_kelamin'] ?? '') === 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="text" name="alamat_pelaku[]" value="<?= sanitize($p['alamat'] ?? '') ?>" placeholder="Alamat lengkap"></td>
-                                            <td><button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button></td>
-                                        </tr>
-                                        <?php 
-                                            endforeach;
-                                        } else {
-                                        ?>
-                                        <tr class="row-pelaku" data-idx="0">
-                                            <td>1</td>
-                                            <td><input type="text" name="nama_pelaku[]" placeholder="Nama lengkap"></td>
-                                            <td><input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM"></td>
-                                            <td><input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas"></td>
-                                            <td>
-                                                <select name="jenis_kelamin_pelaku[]">
-                                                    <option value="">Pilih</option>
-                                                    <option value="Laki-laki">Laki-laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
-                                                </select>
-                                            </td>
-                                            <td><input type="text" name="alamat_pelaku[]" placeholder="Alamat lengkap"></td>
-                                            <td><button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                            <div class="repeat-section" id="pelakuContainer">
+                                <?php
+                                if (!empty($pelakuList)) {
+                                    foreach ($pelakuList as $i => $p):
+                                        $namaPelakuVal = sanitize($p['nama'] ?? '');
+                                        $identitasVal = sanitize($p['identitas'] ?? '');
+                                        $noIdentitasVal = sanitize($p['no_identitas'] ?? '');
+                                        $jenisKelaminVal = $p['jenis_kelamin'] ?? '';
+                                        $alamatVal = sanitize($p['alamat'] ?? '');
+                                ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <span>Pelaku #<?= $i + 1 ?></span>
+                                        <button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button>
+                                    </div>
+                                    <div class="repeat-field repeat-field-inline">
+                                        <div>
+                                            <label>Nama <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="nama_pelaku[]" value="<?= $namaPelakuVal ?>" placeholder="Nama lengkap">
+                                        </div>
+                                        <div>
+                                            <label>Identitas <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="identitas_pelaku[]" value="<?= $identitasVal ?>" placeholder="Misal: KTP, SIM">
+                                        </div>
+                                        <div>
+                                            <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="no_identitas_pelaku[]" value="<?= $noIdentitasVal ?>" placeholder="No. identitas">
+                                        </div>
+                                        <div>
+                                            <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                                            <select name="jenis_kelamin_pelaku[]">
+                                                <option value="">Pilih</option>
+                                                <option value="Laki-laki" <?= $jenisKelaminVal === 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
+                                                <option value="Perempuan" <?= $jenisKelaminVal === 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="repeat-field">
+                                        <label>Alamat <span style="color:#dc2626">*</span></label>
+                                        <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"><?= $alamatVal ?></textarea>
+                                    </div>
+                                </div>
+                                <?php endforeach; } else { ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <span>Pelaku #1</span>
+                                        <button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button>
+                                    </div>
+                                    <div class="repeat-field repeat-field-inline">
+                                        <div>
+                                            <label>Nama <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="nama_pelaku[]" placeholder="Nama lengkap">
+                                        </div>
+                                        <div>
+                                            <label>Identitas <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM">
+                                        </div>
+                                        <div>
+                                            <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas">
+                                        </div>
+                                        <div>
+                                            <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                                            <select name="jenis_kelamin_pelaku[]">
+                                                <option value="">Pilih</option>
+                                                <option value="Laki-laki">Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="repeat-field">
+                                        <label>Alamat <span style="color:#dc2626">*</span></label>
+                                        <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"></textarea>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
                             <button type="button" class="btn-add" onclick="addPelaku()">+ Tambah Pelaku</button>
                         </div>
@@ -441,50 +450,74 @@ $barangList = $barangList->fetchAll();
                         <!-- Section: Barang Hasil Penindakan -->
                         <div class="form-section">
                             <label style="font-size: 15px; color: black; font-weight: 600">📦 Barang Hasil Penindakan</label>
-                            
-                            <div class="table-container">
-                                <table class="data-table" id="tableBarang">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%">No</th>
-                                            <th style="width: 18%">Nama Barang <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 15%">Jenis Barang <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 12%">Jumlah <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 10%">Satuan <span style="color:#dc2626">*</span></th>
-                                            <th style="width: 35%">Jenis Uraian Barang</th>
-                                            <th style="width: 5%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="bodyBarang">
-                                        <?php 
-                                        if (!empty($barangList)) {
-                                            foreach ($barangList as $idx => $b):
-                                        ?>
-                                        <tr class="row-barang" data-idx="<?= $idx ?>">
-                                            <td><?= $idx + 1 ?></td>
-                                            <td><input type="text" name="nama_barang[]" value="<?= sanitize($b['nama_barang'] ?? '') ?>" placeholder="Nama barang"></td>
-                                            <td><input type="text" name="jenis_barang[]" value="<?= sanitize($b['jenis_barang'] ?? '') ?>" placeholder="Jenis"></td>
-                                            <td><input type="number" name="jumlah_barang[]" value="<?= sanitize($b['jumlah_barang'] ?? '') ?>" step="0.01" min="0" placeholder="Jumlah"></td>
-                                            <td><input type="text" name="satuan_barang[]" value="<?= sanitize($b['satuan'] ?? '') ?>" placeholder="Satuan"></td>
-                                            <td><textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang" style="width: 100%; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; resize: vertical;"><?= sanitize($b['jenis_uraian_barang'] ?? '') ?></textarea></td>
-                                            <td><button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button></td>
-                                        </tr>
-                                        <?php 
-                                            endforeach;
-                                        } else {
-                                        ?>
-                                        <tr class="row-barang" data-idx="0">
-                                            <td>1</td>
-                                            <td><input type="text" name="nama_barang[]" placeholder="Nama barang"></td>
-                                            <td><input type="text" name="jenis_barang[]" placeholder="Jenis"></td>
-                                            <td><input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah"></td>
-                                            <td><input type="text" name="satuan_barang[]" placeholder="Satuan"></td>
-                                            <td><textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang" style="width: 100%; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; resize: vertical;"></textarea></td>
-                                            <td><button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                            <div class="repeat-section" id="barangContainer">
+                                <?php
+                                if (!empty($barangList)) {
+                                    foreach ($barangList as $i => $b):
+                                        $namaBarangVal = sanitize($b['nama_barang'] ?? '');
+                                        $jenisBarangVal = sanitize($b['jenis_barang'] ?? '');
+                                        $jumlahBarangVal = sanitize($b['jumlah_barang'] ?? '');
+                                        $satuanBarangVal = sanitize($b['satuan'] ?? '');
+                                        $uraianBarangVal = sanitize($b['jenis_uraian_barang'] ?? '');
+                                ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <span>Barang #<?= $i + 1 ?></span>
+                                        <button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button>
+                                    </div>
+                                    <div class="repeat-field repeat-field-inline">
+                                        <div>
+                                            <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="nama_barang[]" value="<?= $namaBarangVal ?>" placeholder="Nama barang">
+                                        </div>
+                                        <div>
+                                            <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="jenis_barang[]" value="<?= $jenisBarangVal ?>" placeholder="Jenis">
+                                        </div>
+                                        <div>
+                                            <label>Jumlah <span style="color:#dc2626">*</span></label>
+                                            <input type="number" name="jumlah_barang[]" step="0.01" min="0" value="<?= $jumlahBarangVal ?>" placeholder="Jumlah">
+                                        </div>
+                                        <div>
+                                            <label>Satuan <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="satuan_barang[]" value="<?= $satuanBarangVal ?>" placeholder="Satuan">
+                                        </div>
+                                    </div>
+                                    <div class="repeat-field">
+                                        <label>Jenis Uraian Barang</label>
+                                        <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"><?= $uraianBarangVal ?></textarea>
+                                    </div>
+                                </div>
+                                <?php endforeach; } else { ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <span>Barang #1</span>
+                                        <button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button>
+                                    </div>
+                                    <div class="repeat-field repeat-field-inline">
+                                        <div>
+                                            <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="nama_barang[]" placeholder="Nama barang">
+                                        </div>
+                                        <div>
+                                            <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="jenis_barang[]" placeholder="Jenis">
+                                        </div>
+                                        <div>
+                                            <label>Jumlah <span style="color:#dc2626">*</span></label>
+                                            <input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah">
+                                        </div>
+                                        <div>
+                                            <label>Satuan <span style="color:#dc2626">*</span></label>
+                                            <input type="text" name="satuan_barang[]" placeholder="Satuan">
+                                        </div>
+                                    </div>
+                                    <div class="repeat-field">
+                                        <label>Jenis Uraian Barang</label>
+                                        <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"></textarea>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
                             <button type="button" class="btn-add" onclick="addBarang()">+ Tambah Barang</button>
                         </div>
@@ -535,73 +568,106 @@ function loadKecamatan(wilayahId, selectedId) {
 }
 
 function addPelaku() {
-    const tbody = document.getElementById('bodyPelaku');
-    const rowCount = tbody.querySelectorAll('tr').length + 1;
-    const row = document.createElement('tr');
-    row.className = 'row-pelaku';
-    row.dataset.idx = idxPelakuGlobal;
-    row.innerHTML = `
-        <td>${rowCount}</td>
-        <td><input type="text" name="nama_pelaku[]" placeholder="Nama lengkap"></td>
-        <td><input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM"></td>
-        <td><input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas"></td>
-        <td>
-            <select name="jenis_kelamin_pelaku[]">
-                <option value="">Pilih</option>
-                <option value="Laki-laki">Laki-laki</option>
-                <option value="Perempuan">Perempuan</option>
-            </select>
-        </td>
-        <td><input type="text" name="alamat_pelaku[]" placeholder="Alamat lengkap"></td>
-        <td><button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button></td>
+    const container = document.getElementById('pelakuContainer');
+    const index = container.querySelectorAll('.entry-card').length + 1;
+    const card = document.createElement('div');
+    card.className = 'entry-card';
+    card.innerHTML = `
+        <div class="entry-header">
+            <span>Pelaku #${index}</span>
+            <button type="button" class="btn-remove" onclick="removePelaku(this)">Hapus</button>
+        </div>
+        <div class="repeat-field repeat-field-inline">
+            <div>
+                <label>Nama <span style="color:#dc2626">*</span></label>
+                <input type="text" name="nama_pelaku[]" placeholder="Nama lengkap">
+            </div>
+            <div>
+                <label>Identitas <span style="color:#dc2626">*</span></label>
+                <input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM">
+            </div>
+            <div>
+                <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                <input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas">
+            </div>
+            <div>
+                <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                <select name="jenis_kelamin_pelaku[]">
+                    <option value="">Pilih</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+        </div>
+        <div class="repeat-field">
+            <label>Alamat <span style="color:#dc2626">*</span></label>
+            <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"></textarea>
+        </div>
     `;
-    tbody.appendChild(row);
-    idxPelakuGlobal++;
+    container.appendChild(card);
 }
 
 function removePelaku(btn) {
-    const tbody = document.getElementById('bodyPelaku');
-    if (tbody.querySelectorAll('tr').length <= 1) {
+    const container = document.getElementById('pelakuContainer');
+    if (container.querySelectorAll('.entry-card').length <= 1) {
         alert('Minimal harus ada satu data pelaku');
         return;
     }
-    btn.closest('tr').remove();
-    updateRowNumbers('bodyPelaku');
+    btn.closest('.entry-card').remove();
+    updateEntryHeaders('pelakuContainer', 'Pelaku');
 }
 
 function addBarang() {
-    const tbody = document.getElementById('bodyBarang');
-    const rowCount = tbody.querySelectorAll('tr').length + 1;
-    const row = document.createElement('tr');
-    row.className = 'row-barang';
-    row.dataset.idx = idxBarangGlobal;
-    row.innerHTML = `
-        <td>${rowCount}</td>
-        <td><input type="text" name="nama_barang[]" placeholder="Nama barang"></td>
-        <td><input type="text" name="jenis_barang[]" placeholder="Jenis"></td>
-        <td><input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah"></td>
-        <td><input type="text" name="satuan_barang[]" placeholder="Satuan"></td>
-        <td><textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang" style="width: 100%; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; resize: vertical;"></textarea></td>
-        <td><button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button></td>
+    const container = document.getElementById('barangContainer');
+    const index = container.querySelectorAll('.entry-card').length + 1;
+    const card = document.createElement('div');
+    card.className = 'entry-card';
+    card.innerHTML = `
+        <div class="entry-header">
+            <span>Barang #${index}</span>
+            <button type="button" class="btn-remove" onclick="removeBarang(this)">Hapus</button>
+        </div>
+        <div class="repeat-field repeat-field-inline">
+            <div>
+                <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                <input type="text" name="nama_barang[]" placeholder="Nama barang">
+            </div>
+            <div>
+                <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                <input type="text" name="jenis_barang[]" placeholder="Jenis">
+            </div>
+            <div>
+                <label>Jumlah <span style="color:#dc2626">*</span></label>
+                <input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah">
+            </div>
+            <div>
+                <label>Satuan <span style="color:#dc2626">*</span></label>
+                <input type="text" name="satuan_barang[]" placeholder="Satuan">
+            </div>
+        </div>
+        <div class="repeat-field">
+            <label>Jenis Uraian Barang</label>
+            <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"></textarea>
+        </div>
     `;
-    tbody.appendChild(row);
-    idxBarangGlobal++;
+    container.appendChild(card);
 }
 
 function removeBarang(btn) {
-    const tbody = document.getElementById('bodyBarang');
-    if (tbody.querySelectorAll('tr').length <= 1) {
+    const container = document.getElementById('barangContainer');
+    if (container.querySelectorAll('.entry-card').length <= 1) {
         alert('Minimal harus ada satu data barang');
         return;
     }
-    btn.closest('tr').remove();
-    updateRowNumbers('bodyBarang');
+    btn.closest('.entry-card').remove();
+    updateEntryHeaders('barangContainer', 'Barang');
 }
 
-function updateRowNumbers(tbodyId) {
-    const tbody = document.getElementById(tbodyId);
-    tbody.querySelectorAll('tr').forEach((row, idx) => {
-        row.querySelector('td').textContent = idx + 1;
+function updateEntryHeaders(containerId, label) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.entry-card').forEach((card, idx) => {
+        const header = card.querySelector('.entry-header span');
+        if (header) header.textContent = `${label} #${idx + 1}`;
     });
 }
 </script>

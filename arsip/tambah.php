@@ -224,7 +224,6 @@ if (!empty($old['wilayah_id'])) {
         .entry-card { border: 1px solid #d1d5db; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #ffffff; }
         .entry-header { font-weight: 700; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .entry-header span { color: #111827; }
-        .entry-actions { margin-top: 12px; display: flex; justify-content: flex-end; }
         .repeat-field { margin-bottom: 12px; }
         .repeat-field label { display: block; margin-bottom: 6px; font-weight: 600; }
         .repeat-field input,
@@ -334,28 +333,31 @@ if (!empty($old['wilayah_id'])) {
                         <!-- Wilayah & Kecamatan -->
                         <div class="form-section">
                             <label class="form-label" for="map_id" style="font-size: 15px; color: black" > Lokasi (Locus) </label>
-                            <div class="form-group">                                
-                                <label class="form-label" for="wilayah_id">Wilayah <span style="color:#dc2626">*</span></label>
-                                <select class="form-control" id="wilayah_id" name="wilayah_id" required
-                                        onchange="loadKecamatan(this.value)">
-                                    <option value="">-- Pilih Wilayah --</option>
-                                    <?php foreach ($wilayahs as $w): ?>
-                                    <option value="<?= $w['id'] ?>" <?= ($old['wilayah_id'] ?? '') == $w['id'] ? 'selected' : '' ?>>
-                                        <?= sanitize($w['nama_wilayah']) ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="kecamatan_id">Kecamatan <span style="color:#dc2626">*</span></label>
-                                <select class="form-control" id="kecamatan_id" name="kecamatan_id" required>
-                                    <option value="">-- Pilih Kecamatan --</option>
-                                    <?php foreach ($kecamatans as $k): ?>
-                                    <option value="<?= $k['id'] ?>" <?= ($old['kecamatan_id'] ?? '') == $k['id'] ? 'selected' : '' ?>>
-                                        <?= sanitize($k['nama_kecamatan']) ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">                                
+                                    <label class="form-label" for="wilayah_id">Wilayah <span style="color:#dc2626">*</span></label>
+                                    <select class="form-control" id="wilayah_id" name="wilayah_id" required
+                                            onchange="loadKecamatan(this.value)">
+                                        <option value="">-- Pilih Wilayah --</option>
+                                        <?php foreach ($wilayahs as $w): ?>
+                                        <option value="<?= $w['id'] ?>" <?= ($old['wilayah_id'] ?? '') == $w['id'] ? 'selected' : '' ?>>
+                                            <?= sanitize($w['nama_wilayah']) ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label class="form-label" for="kecamatan_id">Kecamatan <span style="color:#dc2626">*</span></label>
+                                    <select class="form-control" id="kecamatan_id" name="kecamatan_id" required>
+                                        <option value="">-- Pilih Kecamatan --</option>
+                                        <?php foreach ($kecamatans as $k): ?>
+                                        <option value="<?= $k['id'] ?>" <?= ($old['kecamatan_id'] ?? '') == $k['id'] ? 'selected' : '' ?>>
+                                            <?= sanitize($k['nama_kecamatan']) ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
