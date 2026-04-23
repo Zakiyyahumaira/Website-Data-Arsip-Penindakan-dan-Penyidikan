@@ -56,6 +56,15 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
         .table-list th { background:#f3f4f6; padding:8px; text-align:left; font-weight:600; border:1px solid #e5e7eb; }
         .table-list td { padding:8px; border:1px solid #e5e7eb; }
         .table-list tr:nth-child(even) { background:#fafafa; }
+        .repeat-section { margin-top:12px; }
+        .entry-card { border:1px solid #d1d5db; border-radius:10px; padding:18px; margin-bottom:16px; background:#ffffff; }
+        .entry-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:12px; }
+        .entry-header h5 { margin:0; font-size:15px; color:#111827; }
+        .entry-group { display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+        .field-item { display:flex; flex-direction:column; gap:6px; }
+        .field-label { font-size:13px; font-weight:600; color:#4b5563; }
+        .field-value { font-size:14px; color:#111827; line-height:1.6; white-space:pre-line; }
+        .field-value.empty { color:#6b7280; }
     </style>
 </head>
 <body>
@@ -164,28 +173,37 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                         <?php if (!empty($pelakuList)): ?>
                         <div style="margin-top:20px;padding-top:20px;border-top:2px solid #e5e7eb">
                             <h4 style="margin:0 0 12px 0;color:#1f2937">👤 Data Pelaku</h4>
-                            <table class="table-list">
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Identitas</th>
-                                        <th>No. Identitas</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Alamat</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($pelakuList as $p): ?>
-                                    <tr>
-                                        <td><?= sanitize($p['nama']) ?></td>
-                                        <td><?= sanitize($p['identitas']) ?></td>
-                                        <td><?= sanitize($p['no_identitas']) ?></td>
-                                        <td><?= sanitize($p['jenis_kelamin']) ?></td>
-                                        <td><?= sanitize($p['alamat']) ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                            <div class="repeat-section">
+                                <?php foreach ($pelakuList as $idx => $p): ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <h5>Pelaku #<?= $idx + 1 ?></h5>
+                                    </div>
+                                    <div class="entry-group">
+                                        <div class="field-item">
+                                            <div class="field-label">Nama</div>
+                                            <div class="field-value"><?= sanitize($p['nama']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">Identitas</div>
+                                            <div class="field-value"><?= sanitize($p['identitas']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">No. Identitas</div>
+                                            <div class="field-value"><?= sanitize($p['no_identitas']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">Jenis Kelamin</div>
+                                            <div class="field-value"><?= sanitize($p['jenis_kelamin']) ?></div>
+                                        </div>
+                                        <div class="field-item" style="grid-column:1 / -1">
+                                            <div class="field-label">Alamat</div>
+                                            <div class="field-value"><?= sanitize($p['alamat']) ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                         <?php endif; ?>
 
@@ -193,28 +211,37 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                         <?php if (!empty($barangList)): ?>
                         <div style="margin-top:20px;padding-top:20px;border-top:2px solid #e5e7eb">
                             <h4 style="margin:0 0 12px 0;color:#1f2937">📦 Barang Hasil Penindakan</h4>
-                            <table class="table-list">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Barang</th>
-                                        <th>Jenis Barang</th>
-                                        <th>Jumlah</th>
-                                        <th>Satuan</th>
-                                        <th>Jenis Uraian Barang</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($barangList as $b): ?>
-                                    <tr>
-                                        <td><?= sanitize($b['nama_barang']) ?></td>
-                                        <td><?= sanitize($b['jenis_barang']) ?></td>
-                                        <td><?= formatJumlah($b['jumlah_barang']) ?></td>
-                                        <td><?= sanitize($b['satuan']) ?></td>
-                                        <td><?= sanitize($b['jenis_uraian_barang'] ?? '-') ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                            <div class="repeat-section">
+                                <?php foreach ($barangList as $idx => $b): ?>
+                                <div class="entry-card">
+                                    <div class="entry-header">
+                                        <h5>Barang #<?= $idx + 1 ?></h5>
+                                    </div>
+                                    <div class="entry-group">
+                                        <div class="field-item">
+                                            <div class="field-label">Nama Barang</div>
+                                            <div class="field-value"><?= sanitize($b['nama_barang']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">Jenis Barang</div>
+                                            <div class="field-value"><?= sanitize($b['jenis_barang']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">Jumlah</div>
+                                            <div class="field-value"><?= formatJumlah($b['jumlah_barang']) ?></div>
+                                        </div>
+                                        <div class="field-item">
+                                            <div class="field-label">Satuan</div>
+                                            <div class="field-value"><?= sanitize($b['satuan']) ?></div>
+                                        </div>
+                                        <div class="field-item" style="grid-column:1 / -1">
+                                            <div class="field-label">Jenis Uraian Barang</div>
+                                            <div class="field-value"><?= sanitize($b['jenis_uraian_barang'] ?? '-') ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                         <?php endif; ?>                        
                     </div>
