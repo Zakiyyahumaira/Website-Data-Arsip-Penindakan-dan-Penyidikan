@@ -385,21 +385,21 @@ $barangList = $barangList->fetchAll();
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Nama <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Nama <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_pelaku[]" value="<?= $namaPelakuVal ?>" placeholder="Nama lengkap">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Identitas <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="identitas_pelaku[]" value="<?= $identitasVal ?>" placeholder="Misal: KTP, SIM">
                                         </div>
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">No. Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="no_identitas_pelaku[]" value="<?= $noIdentitasVal ?>" placeholder="No. identitas">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jenis Kelamin <span style="color:#dc2626">*</span></label>
                                             <select name="jenis_kelamin_pelaku[]">
                                                 <option value="">Pilih</option>
                                                 <option value="Laki-laki" <?= $jenisKelaminVal === 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
@@ -408,7 +408,7 @@ $barangList = $barangList->fetchAll();
                                         </div>
                                     </div>
                                     <div class="repeat-field">
-                                        <label>Alamat <span style="color:#dc2626">*</span></label>
+                                        <label class="form-label">Alamat <span style="color:#dc2626">*</span></label>
                                         <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"><?= $alamatVal ?></textarea>
                                     </div>
                                 </div>
@@ -420,21 +420,21 @@ $barangList = $barangList->fetchAll();
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Nama <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Nama <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_pelaku[]" placeholder="Nama lengkap">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Identitas <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM">
                                         </div>
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">No. Identitas <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jenis Kelamin <span style="color:#dc2626">*</span></label>
                                             <select name="jenis_kelamin_pelaku[]">
                                                 <option value="">Pilih</option>
                                                 <option value="Laki-laki">Laki-laki</option>
@@ -443,7 +443,7 @@ $barangList = $barangList->fetchAll();
                                         </div>
                                     </div>
                                     <div class="repeat-field">
-                                        <label>Alamat <span style="color:#dc2626">*</span></label>
+                                        <label class="form-label">Alamat <span style="color:#dc2626">*</span></label>
                                         <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"></textarea>
                                     </div>
                                 </div>
@@ -472,26 +472,26 @@ $barangList = $barangList->fetchAll();
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Nama Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_barang[]" value="<?= $namaBarangVal ?>" placeholder="Nama barang">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jenis Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="jenis_barang[]" value="<?= $jenisBarangVal ?>" placeholder="Jenis">
                                         </div>
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Jumlah <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jumlah <span style="color:#dc2626">*</span></label>
                                             <input type="number" name="jumlah_barang[]" step="0.01" min="0" value="<?= $jumlahBarangVal ?>" placeholder="Jumlah">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Satuan <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Satuan <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="satuan_barang[]" value="<?= $satuanBarangVal ?>" placeholder="Satuan">
                                         </div>
                                     </div>
                                     <div class="repeat-field">
-                                        <label>Jenis Uraian Barang</label>
+                                        <label class="form-label">Jenis Uraian Barang</label>
                                         <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"><?= $uraianBarangVal ?></textarea>
                                     </div>
                                 </div>
@@ -503,26 +503,26 @@ $barangList = $barangList->fetchAll();
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Nama Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="nama_barang[]" placeholder="Nama barang">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jenis Barang <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="jenis_barang[]" placeholder="Jenis">
                                         </div>
                                     </div>
                                     <div class="repeat-field-2col">
                                         <div class="repeat-field">
-                                            <label>Jumlah <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Jumlah <span style="color:#dc2626">*</span></label>
                                             <input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah">
                                         </div>
                                         <div class="repeat-field">
-                                            <label>Satuan <span style="color:#dc2626">*</span></label>
+                                            <label class="form-label">Satuan <span style="color:#dc2626">*</span></label>
                                             <input type="text" name="satuan_barang[]" placeholder="Satuan">
                                         </div>
                                     </div>
                                     <div class="repeat-field">
-                                        <label>Jenis Uraian Barang</label>
+                                        <label class="form-label">Jenis Uraian Barang</label>
                                         <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"></textarea>
                                     </div>
                                 </div>
@@ -588,21 +588,21 @@ function addPelaku() {
         </div>
         <div class="repeat-field-2col">
             <div class="repeat-field">
-                <label>Nama <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Nama <span style="color:#dc2626">*</span></label>
                 <input type="text" name="nama_pelaku[]" placeholder="Nama lengkap">
             </div>
             <div class="repeat-field">
-                <label>Identitas <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Identitas <span style="color:#dc2626">*</span></label>
                 <input type="text" name="identitas_pelaku[]" placeholder="Misal: KTP, SIM">
             </div>
         </div>
         <div class="repeat-field-2col">
             <div class="repeat-field">
-                <label>No. Identitas <span style="color:#dc2626">*</span></label>
+                <label class="form-label">No. Identitas <span style="color:#dc2626">*</span></label>
                 <input type="text" name="no_identitas_pelaku[]" placeholder="No. identitas">
             </div>
             <div class="repeat-field">
-                <label>Jenis Kelamin <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Jenis Kelamin <span style="color:#dc2626">*</span></label>
                 <select name="jenis_kelamin_pelaku[]">
                     <option value="">Pilih</option>
                     <option value="Laki-laki">Laki-laki</option>
@@ -611,7 +611,7 @@ function addPelaku() {
             </div>
         </div>
         <div class="repeat-field">
-            <label>Alamat <span style="color:#dc2626">*</span></label>
+            <label class="form-label">Alamat <span style="color:#dc2626">*</span></label>
             <textarea name="alamat_pelaku[]" placeholder="Alamat lengkap"></textarea>
         </div>
     `;
@@ -640,26 +640,26 @@ function addBarang() {
         </div>
         <div class="repeat-field-2col">
             <div class="repeat-field">
-                <label>Nama Barang <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Nama Barang <span style="color:#dc2626">*</span></label>
                 <input type="text" name="nama_barang[]" placeholder="Nama barang">
             </div>
             <div class="repeat-field">
-                <label>Jenis Barang <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Jenis Barang <span style="color:#dc2626">*</span></label>
                 <input type="text" name="jenis_barang[]" placeholder="Jenis">
             </div>
         </div>
         <div class="repeat-field-2col">
             <div class="repeat-field">
-                <label>Jumlah <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Jumlah <span style="color:#dc2626">*</span></label>
                 <input type="number" name="jumlah_barang[]" step="0.01" min="0" placeholder="Jumlah">
             </div>
             <div class="repeat-field">
-                <label>Satuan <span style="color:#dc2626">*</span></label>
+                <label class="form-label">Satuan <span style="color:#dc2626">*</span></label>
                 <input type="text" name="satuan_barang[]" placeholder="Satuan">
             </div>
         </div>
         <div class="repeat-field">
-            <label>Jenis Uraian Barang</label>
+            <label class="form-label">Jenis Uraian Barang</label>
             <textarea name="jenis_uraian_barang[]" placeholder="Deskripsi barang"></textarea>
         </div>
     `;
