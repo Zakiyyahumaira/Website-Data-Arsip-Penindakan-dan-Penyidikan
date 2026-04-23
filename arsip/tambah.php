@@ -476,13 +476,14 @@ if (!empty($old['wilayah_id'])) {
                             </div>
                             <button type="button" class="btn-add" onclick="addBarang()">+ Tambah Barang</button>
                         </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="fileInput">Upload File Dokumen</label>
-                            <input class="form-control" type="file" id="fileInput" name="file"
-                                   accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
-                            <div class="form-hint" id="filePreview">PDF, Word, Excel, Gambar — maks. 10 MB</div>
-                        </div>
+                        
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label class="form-label" for="fileInput">Upload File Dokumen</label>
+                                <input class="form-control" type="file" id="fileInput" name="file"
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
+                                <div class="form-hint" id="filePreview">PDF, Word, Excel, Gambar — maks. 10 MB</div>
+                            </div>
 
                         <div style="display:flex;gap:12px;margin-top:8px">
                             <button type="submit" class="btn btn-primary">Simpan Arsip</button>

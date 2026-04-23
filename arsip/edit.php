@@ -531,17 +531,18 @@ $barangList = $barangList->fetchAll();
                             <button type="button" class="btn-add" onclick="addBarang()">+ Tambah Barang</button>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Ganti File Dokumen</label>
-                            <?php if ($arsip['file_name']): ?>
-                            <p style="font-size:13px;color:#6b7280;margin-bottom:6px">
-                                File saat ini: <strong><?= sanitize($arsip['file_name']) ?></strong>
-                            </p>
-                            <?php endif; ?>
-                            <input class="form-control" type="file" id="fileInput" name="file"
-                                   accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
-                            <div class="form-hint" id="filePreview">Kosongkan jika tidak ingin ganti file</div>
-                        </div>
+                        <div class="form-section">
+                            <div class="form-group">
+                                <label class="form-label">Ganti File Dokumen</label>
+                                <?php if ($arsip['file_name']): ?>
+                                <p style="font-size:13px;color:#6b7280;margin-bottom:6px">
+                                    File saat ini: <strong><?= sanitize($arsip['file_name']) ?></strong>
+                                </p>
+                                <?php endif; ?>
+                                <input class="form-control" type="file" id="fileInput" name="file"
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
+                                <div class="form-hint" id="filePreview">Kosongkan jika tidak ingin ganti file</div>
+                            </div>
 
                         <div style="display:flex;gap:12px;margin-top:8px">
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
