@@ -12,17 +12,28 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Arsip Kantor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="login-bg">
-    <div class="login-card">
-        <div class="login-logo">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 8px;display:block">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-            </svg>
-            <h1>Sistem Arsip Kantor</h1>
+    <div class="login-container">
+
+        <!-- KIRI (BACKGROUND + ISI BEBAS) -->
+        <div class="login-left">
+            <img src="/Website-Data-Arsip-Penindakan-dan-Penyidikan/img/Logo_Bea_Cukai_Banda_Aceh.png" class="logo-img">
+            <h1>Bea Cukai Banda Aceh</h1>
+            <p>Sistem Arsip Digital</p>
+        </div>
+
+        <!-- KANAN (CARD LAMA KAMU, JANGAN DIUBAH) -->
+        <div class="login-right">
+            <div class="login-card">
+                <div class="login-logo">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 8px;display:block">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <h1>Sistem Arsip Kantor</h1>
             <p>Masuk untuk mengelola dokumen arsip</p>
         </div>
 

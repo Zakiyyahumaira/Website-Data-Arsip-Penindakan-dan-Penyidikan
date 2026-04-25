@@ -295,12 +295,41 @@ tbody tr:last-child td { border-bottom: none; }
 /* ── Login page ──────────────────────────────────────── */
 .login-bg {
     min-height: 100vh;
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    background: #f3f4f6;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    padding: 0; /* biar full */
 }
+.login-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* kiri */
+.login-left {
+    flex: 1;
+    color:#0e0063;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* kanan */
+.login-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 12px;
+    object-fit: contain;
+}
+
 .login-card {
     background: #fff;
     border-radius: 14px;
@@ -396,3 +425,19 @@ tbody tr:last-child td { border-bottom: none; }
     }
 }
 
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .login-left {
+        display: flex;
+        height: 180px;
+        padding: 20px;
+    }
+
+    .login-right {
+        width: 100%;
+        padding: 20px;
+    }
+}
