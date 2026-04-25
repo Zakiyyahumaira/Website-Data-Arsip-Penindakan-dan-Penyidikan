@@ -55,8 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>📁 Tambah Map Baru</h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>
@@ -101,5 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+<script src="../js/main.js"></script>
 </body>
 </html>

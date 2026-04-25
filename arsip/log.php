@@ -33,8 +33,9 @@ $msg = $_GET['msg'] ?? '';
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Log Aktivitas</h1>
             <div class="topbar-actions">
                 <?php if ($total > 0): ?>

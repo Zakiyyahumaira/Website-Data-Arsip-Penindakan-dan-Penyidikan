@@ -61,8 +61,11 @@ $users = $pdo->query(
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
-        <div class="topbar"><h1>Manajemen Pengguna</h1></div>
+    <div class="main-content collapsed">
+        <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
+            <h1>Manajemen Pengguna</h1>
+        </div>
 
         <div class="page-body">
             <?php if ($msg === 'tambah'): ?>

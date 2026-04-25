@@ -50,8 +50,9 @@ $arsips = $stmt->fetchAll();
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>📁 <?= sanitize($map['nama_map']) ?></h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali ke Daftar Map</a>
@@ -118,5 +119,6 @@ $arsips = $stmt->fetchAll();
         </div>
     </div>
 </div>
+<script src="../js/main.js"></script>
 </body>
 </html>

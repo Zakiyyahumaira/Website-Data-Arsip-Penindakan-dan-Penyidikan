@@ -77,8 +77,9 @@ $mapList = getSemuaMap($pdo);
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>📁 Daftar Map/Folder</h1>
             <div class="topbar-actions">
                 <a href="map_tambah.php" class="btn btn-primary btn-sm">+ Tambah Map Baru</a>
@@ -138,5 +139,6 @@ function confirmDelete(mapId, mapName) {
     }
 }
 </script>
+<script src="../js/main.js"></script>
 </body>
 </html>

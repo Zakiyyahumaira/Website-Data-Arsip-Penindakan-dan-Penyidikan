@@ -119,7 +119,38 @@ document.addEventListener('DOMContentLoaded', function () {
     initTableSearch('searchInput', 'arsipTable');
     initFileInput('fileInput', 'filePreview');
     initAlerts();
+    initSidebarToggle();
+
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.main-content');
+
+    // DEFAULT: sidebar tertutup
+    if (!localStorage.getItem('sidebar')) {
+        sidebar.classList.add('collapsed');
+        content.classList.add('full');
+    }
+
+    // kalau sudah pernah disimpan
+    if (localStorage.getItem('sidebar') === 'closed') {
+        sidebar.classList.add('collapsed');
+        content.classList.add('full');
+    }
 
     const nomorField = document.getElementById('nomor_arsip');
     if (nomorField) generateNomor();
 });
+
+/* ── Sidebar toggle ──────────────────────────────────── */
+function initSidebarToggle() {
+    const btn = document.getElementById('toggleSidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('.main-content');
+
+    if (!btn || !sidebar || !main) return;
+
+    btn.addEventListener('click', function () {
+        sidebar.classList.toggle('collapsed');
+        main.classList.toggle('collapsed');
+    });
+}
+

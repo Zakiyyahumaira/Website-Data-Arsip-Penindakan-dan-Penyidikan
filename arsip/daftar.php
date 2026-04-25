@@ -65,8 +65,9 @@ $msg = $_GET['msg'] ?? '';
 <body>
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Daftar Arsip</h1>
             <div class="topbar-actions">
                 <a href="tambah.php" class="btn btn-primary btn-sm">+ Upload Arsip</a>

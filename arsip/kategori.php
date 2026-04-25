@@ -85,8 +85,11 @@ $kecamatans = $pdo->query(
 <body>
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
-    <div class="main-content">
-        <div class="topbar"><h1>Referensi Data</h1></div>
+    <div class="main-content collapsed">
+        <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
+            <h1>Referensi Data</h1>
+        </div>
         <div class="page-body">
             <?php if ($msg === 'tambah'): ?><div class="alert alert-success" data-dismiss="3000">Data berhasil ditambahkan.</div>
             <?php elseif ($msg === 'hapus'): ?><div class="alert alert-success" data-dismiss="3000">Data berhasil dihapus.</div><?php endif; ?>

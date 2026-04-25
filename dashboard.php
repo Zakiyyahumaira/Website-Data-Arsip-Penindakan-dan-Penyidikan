@@ -49,8 +49,9 @@ $perWilayah = $pdo->query(
 <body>
 <div class="wrapper">
     <?php require 'config/sidebar.php'; ?>
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Dashboard</h1>
             <div class="topbar-actions">
                 <span style="font-size:13px;color:#6b7280"><?= date('l, d F Y') ?></span>

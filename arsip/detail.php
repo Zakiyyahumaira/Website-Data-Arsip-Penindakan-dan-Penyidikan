@@ -70,8 +70,9 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
 <body>
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Detail Arsip</h1>
             <div class="topbar-actions">
                 <a href="daftar.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>

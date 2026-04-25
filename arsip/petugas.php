@@ -57,8 +57,9 @@ $petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
 <div class="wrapper">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content">
+    <div class="main-content collapsed">
         <div class="topbar">
+            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Manajemen Petugas</h1>
         </div>
 
