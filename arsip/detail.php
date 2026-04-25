@@ -46,6 +46,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= sanitize(($arsip['petugas_1'] ?? '-') . ' / ' . ($arsip['petugas_2'] ?? '-')) ?> — Arsip Kantor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .info-row { display:flex; border-bottom:1px solid #f3f4f6; padding:12px 0; gap:16px; }

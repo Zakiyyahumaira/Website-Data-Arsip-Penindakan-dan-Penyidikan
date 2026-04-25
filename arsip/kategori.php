@@ -74,6 +74,7 @@ $kecamatans = $pdo->query(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Referensi Data — Arsip Kantor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .tab-bar { display:flex; gap:4px; margin-bottom:20px; }

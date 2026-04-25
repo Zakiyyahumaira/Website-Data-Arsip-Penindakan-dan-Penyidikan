@@ -225,6 +225,7 @@ $barangList = $barangList->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Arsip — Arsip Kantor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .form-section { margin-top: 24px; padding-top: 16px; border-top: 2px solid #e5e7eb; }
