@@ -126,14 +126,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // DEFAULT: sidebar tertutup
     if (!localStorage.getItem('sidebar')) {
-        sidebar.classList.add('collapsed');
-        content.classList.add('full');
+        sidebar.classList.add('sidebar-collapsed');
+        content.classList.add('sidebar-collapsed');
     }
 
     // kalau sudah pernah disimpan
     if (localStorage.getItem('sidebar') === 'closed') {
-        sidebar.classList.add('collapsed');
-        content.classList.add('full');
+        sidebar.classList.add('sidebar-collapsed');
+        content.classList.add('sidebar-collapsed');
     }
 
     const nomorField = document.getElementById('nomor_arsip');
@@ -149,8 +149,8 @@ function initSidebarToggle() {
     if (!btn || !sidebar || !main) return;
 
     btn.addEventListener('click', function () {
-        sidebar.classList.toggle('collapsed');
-        main.classList.toggle('collapsed');
+        sidebar.classList.toggle('sidebar-collapsed');
+        main.classList.toggle('sidebar-collapsed');
     });
 }
 

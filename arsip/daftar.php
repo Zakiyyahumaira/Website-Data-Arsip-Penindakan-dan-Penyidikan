@@ -64,11 +64,11 @@ $msg = $_GET['msg'] ?? '';
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<div class="wrapper">
+<div class="app-layout">
     <?php require '../config/sidebar.php'; ?>
-    <div class="main-content collapsed">
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
+
             <h1>Daftar Arsip</h1>
             <div class="topbar-actions">
                 <a href="tambah.php" class="btn btn-primary btn-sm">+ Upload Arsip</a>

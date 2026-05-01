@@ -59,12 +59,11 @@ $users = $pdo->query(
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<div class="wrapper">
+<div class="app-layout">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content collapsed">
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Manajemen Pengguna</h1>
         </div>
 

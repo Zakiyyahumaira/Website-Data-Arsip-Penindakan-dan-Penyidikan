@@ -18,6 +18,11 @@
     --radius:       8px;
     --shadow:       0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
     --shadow-md:    0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    
+    /* Sidebar variables */
+    --sidebar-width: 240px;
+    --sidebar-collapsed-width: 70px;
+    --sidebar-transition: 0.3s ease;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,19 +38,368 @@ body {
 a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* ── Layout ──────────────────────────────────────────── */
-.wrapper { display: flex; min-height: 100vh; }
+/* ============================================================
+   APP LAYOUT - Responsive Sidebar Container
+   Scoped to .app-layout to avoid conflicts with other pages
+   ============================================================ */
 
-.sidebar {
-    width: 240px;
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ── Hamburger Toggle Button ───────────────────────────── */
+/* Position fixed di kiri atas - selalu visible di desktop */
+
+.app-layout .hamburger-btn {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1002; /* Lebih tinggi dari sidebar (1000) */
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 20px;
+    line-height: 1;
+    transition: background var(--sidebar-transition), transform var(--sidebar-transition);
+    display: block !important;
+    box-shadow: var(--shadow);
+}
+
+.app-layout .hamburger-btn:hover {
+    background: var(--gray-100);
+}
+
+.app-layout .hamburger-btn:active {
+    transform: scale(0.95);
+}
+
+/* Saat sidebar collapsed di desktop, geser hamburger */
+@media (min-width: 768px) {
+    .app-layout .sidebar-collapsed ~ .hamburger-btn,
+    .app-layout .sidebar + .hamburger-btn {
+        left: 80px; /* 70px collapsed + 10px gap */
+    }
+}
+
+/* ── Sidebar Base Styles ───────────────────────────────── */
+
+.app-layout .sidebar {
+    width: var(--sidebar-width);
     background: var(--gray-800);
     color: #fff;
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 0; left: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
     overflow-y: auto;
-    z-index: 100;
+    z-index: 1000;
+    transition: width var(--sidebar-transition), 
+                transform var(--sidebar-transition);
+}
+
+/* Sidebar Brand */
+.app-layout .sidebar-brand {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: padding var(--sidebar-transition);
+}
+
+.app-layout .sidebar-brand h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-layout .sidebar-brand span {
+    font-size: 12px;
+    color: var(--gray-400);
+    display: block;
+    margin-top: 4px;
+    opacity: 1;
+    transition: opacity var(--sidebar-transition);
+}
+
+/* Sidebar Navigation */
+.app-layout .sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+    overflow: hidden;
+}
+
+.app-layout .nav-section {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--gray-400);
+    padding: 16px 20px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: padding var(--sidebar-transition);
+}
+
+.app-layout .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: rgba(255,255,255,.75);
+    font-size: 14px;
+    transition: background .15s, color .15s, padding var(--sidebar-transition);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.app-layout .nav-item:hover, 
+.app-layout .nav-item.active {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    border-left-color: var(--primary);
+    text-decoration: none;
+}
+
+.app-layout .nav-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.app-layout .nav-item span {
+    opacity: 1;
+    transition: opacity var(--sidebar-transition);
+}
+
+/* Sidebar Footer */
+.app-layout .sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,.1);
+    font-size: 13px;
+    color: var(--gray-400);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: padding var(--sidebar-transition);
+}
+
+.app-layout .sidebar-footer strong {
+    display: block;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* ── Main Content ──────────────────────────────────────── */
+
+.app-layout .main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    display: flex;
+    flex-direction: column;
+    transition: margin var(--sidebar-transition), 
+                width var(--sidebar-transition);
+}
+
+/* Topbar */
+.app-layout .topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow);
+}
+
+.app-layout .topbar h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.app-layout .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Hamburger Toggle Button */
+.app-layout .hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius);
+    transition: background var(--sidebar-transition);
+}
+
+.app-layout .hamburger-btn:hover {
+    background: var(--gray-100);
+}
+
+.app-layout .hamburger-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--gray-600);
+    display: block;
+}
+
+/* Page Body */
+.app-layout .page-body {
+    padding: 28px;
+    flex: 1;
+}
+
+/* ── Backdrop for Mobile ──────────────────────────────── */
+
+.app-layout .backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity var(--sidebar-transition);
+}
+
+.app-layout .backdrop.active {
+    opacity: 1;
+}
+
+/* ============================================================
+   DESKTOP MODE (≥768px) - Collapsible Sidebar
+   ============================================================ */
+
+@media (min-width: 768px) {
+    /* Sidebar default: visible (240px) */
+    .app-layout .sidebar {
+        transform: translateX(0);
+    }
+    
+    /* Sidebar Collapsed State */
+    .app-layout .sidebar.sidebar-collapsed {
+        width: var(--sidebar-collapsed-width);
+    }
+    
+    .app-layout .sidebar.sidebar-collapsed .sidebar-brand {
+        padding: 20px 10px;
+    }
+    
+    .app-layout .sidebar.sidebar-collapsed .sidebar-brand h2 {
+        justify-content: center;
+    }
+    
+    .app-layout .sidebar.sidebar-collapsed .sidebar-brand span,
+    .app-layout .sidebar.sidebar-collapsed .nav-item span,
+    .app-layout .sidebar.sidebar-collapsed .nav-section,
+    .app-layout .sidebar.sidebar-collapsed .sidebar-footer {
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .app-layout .sidebar.sidebar-collapsed .nav-item {
+        padding: 10px 20px;
+        justify-content: center;
+    }
+    
+    .app-layout .sidebar.sidebar-collapsed .sidebar-footer {
+        padding: 16px 10px;
+        text-align: center;
+    }
+    
+    /* Main Content Adjustment */
+    .app-layout .main-content.sidebar-collapsed {
+        margin-left: var(--sidebar-collapsed-width);
+        width: calc(100% - var(--sidebar-collapsed-width));
+    }
+    
+    /* Hamburger always visible - no media query needed, already block */
+}
+
+/* ============================================================
+   MOBILE MODE (<768px) - Overlay Sidebar
+   ============================================================ */
+
+@media (max-width: 767px) {
+    /* Hide sidebar by default on mobile */
+    .app-layout .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width);
+    }
+    
+    /* Sidebar Open State */
+    .app-layout .sidebar.sidebar-open {
+        transform: translateX(0);
+    }
+    
+    /* Main content stays full width on mobile */
+    .app-layout .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    /* Show backdrop */
+    .app-layout .backdrop {
+        display: block;
+        pointer-events: none;
+    }
+    
+    .app-layout .backdrop.active {
+        pointer-events: auto;
+    }
+    
+    /* Adjust topbar for mobile - add left padding for hamburger */
+    .app-layout .topbar {
+        padding: 14px 20px 14px 60px;
+    }
+    
+    .app-layout .page-body {
+        padding: 20px;
+    }
+}
+
+/* ── Cards ───────────────────────────────────────────── */
+.app-layout .card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.app-layout .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.app-layout .card-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.app-layout .card-body {
+    padding: 20px;
 }
 
 .sidebar-brand {
@@ -378,18 +732,20 @@ tbody tr:last-child td { border-bottom: none; }
 
 /* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 768px) {
-    .sidebar { width: 200px; }
-    .main-content { margin-left: 200px; }
+    /*.sidebar { width: 200px; }
+    .main-content { margin-left: 200px; }*/
     .form-row { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
 }
+/*
 @media (max-width: 560px) {
     .sidebar { display: none; }
     .main-content { margin-left: 0; }
 }
+*/
 
 /* ===== SIDEBAR TOGGLE SIMPLE ===== */
-
+/*
 .sidebar {
     transition: 0.3s ease;
 }
@@ -398,19 +754,16 @@ tbody tr:last-child td { border-bottom: none; }
     transition: 0.3s;
 }
 
-/* Collapse desktop */
-.sidebar.collapsed {
-    transform: translateX(-100%);
-}
-
+/* Co
 .sidebar.collapsed .nav-item span,
 .sidebar.collapsed .nav-section,
 .sidebar.collapsed .sidebar-brand span {
     display: none;
 }
-
+*/
 
 /* Mobile */
+/*
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-100%);
@@ -424,6 +777,7 @@ tbody tr:last-child td { border-bottom: none; }
         margin-left: 0 !important;
     }
 }
+*/
 
 @media (max-width: 768px) {
     .login-container {

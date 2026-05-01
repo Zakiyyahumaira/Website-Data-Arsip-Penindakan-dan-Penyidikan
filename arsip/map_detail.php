@@ -48,12 +48,11 @@ $arsips = $stmt->fetchAll();
     </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="app-layout">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content collapsed">
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>📁 <?= sanitize($map['nama_map']) ?></h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali ke Daftar Map</a>

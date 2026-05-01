@@ -75,12 +75,11 @@ $mapList = getSemuaMap($pdo);
     </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="app-layout">
     <?php require '../config/sidebar.php'; ?>
 
-    <div class="main-content collapsed">
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>📁 Daftar Map/Folder</h1>
             <div class="topbar-actions">
                 <a href="map_tambah.php" class="btn btn-primary btn-sm">+ Tambah Map Baru</a>

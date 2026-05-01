@@ -84,11 +84,10 @@ $kecamatans = $pdo->query(
     </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="app-layout">
     <?php require '../config/sidebar.php'; ?>
-    <div class="main-content collapsed">
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
             <h1>Referensi Data</h1>
         </div>
         <div class="page-body">

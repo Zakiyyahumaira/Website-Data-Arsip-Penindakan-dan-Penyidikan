@@ -1,4 +1,11 @@
 <?php
+/**
+ * ============================================================
+ * Sidebar - Responsive Sidebar Component
+ * Include this in your page layout
+ * ============================================================
+ */
+
 // Hitung base URL berdasarkan PHP_SELF
 // /arsip-kantor/dashboard.php         -> depth=0 -> base=''
 // /arsip-kantor/arsip/daftar.php      -> depth=1 -> base='../'
@@ -23,9 +30,21 @@ function isActive($pages) {
     return '';
 }
 ?>
-<div class="sidebar collapsed">
+
+<!-- ============================================================
+   Sidebar Component - Responsive
+   ============================================================ -->
+
+<!-- Hamburger Toggle Button -->
+<button id="toggleSidebar" class="hamburger-btn">☰</button>
+<!-- Sidebar -->
+<!-- Default: visible (240px), tambahkan class .sidebar-collapsed untuk collapse -->
+<aside class="sidebar">
     <div class="sidebar-brand">
-        <h2>&#128193; Arsip Kantor</h2>
+        <h2>
+            <span>&#128193;</span>
+            <span>Arsip Kantor</span>
+        </h2>
         <span>Sistem Manajemen Arsip</span>
     </div>
 
@@ -83,4 +102,7 @@ function isActive($pages) {
         &nbsp;·&nbsp;
         <a href="<?= $base ?>auth/logout.php" style="color:var(--gray-400)">Keluar</a>
     </div>
-</div>
+</aside>
+
+<!-- Backdrop for Mobile -->
+<div class="backdrop"></div>

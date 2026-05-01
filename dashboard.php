@@ -48,11 +48,16 @@ $perWilayah = $pdo->query(
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="wrapper">
+<!-- App Layout Container - Responsive Sidebar -->
+<div class="app-layout">
     <?php require 'config/sidebar.php'; ?>
-    <div class="main-content collapsed">
+    
+    <!-- Main Content -->
+    <!-- Default: margin-left: 240px (sidebar visible) -->
+    <!-- Tambahkan class .sidebar-collapsed untuk mode collapse -->
+    <div class="main-content">
         <div class="topbar">
-            <button id="toggleSidebar" class="btn btn-ghost btn-sm">☰</button>
+            <!-- Hamburger button is now in sidebar.php -->
             <h1>Dashboard</h1>
             <div class="topbar-actions">
                 <span style="font-size:13px;color:#6b7280"><?= date('l, d F Y') ?></span>
@@ -155,6 +160,9 @@ $perWilayah = $pdo->query(
         </div>
     </div>
 </div>
-<script src="js/main.js"></script>
+<!-- End .app-layout -->
+
+<!-- Load Sidebar JavaScript -->
+<script src="js/sidebar.js"></script>
 </body>
 </html>
