@@ -60,6 +60,7 @@ $petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
 
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Manajemen Petugas</h1>
         </div>
 
@@ -135,6 +136,7 @@ $petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
             </div>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 </body>

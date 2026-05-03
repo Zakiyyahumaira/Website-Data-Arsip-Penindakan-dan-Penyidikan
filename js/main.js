@@ -142,15 +142,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* ── Sidebar toggle ──────────────────────────────────── */
 function initSidebarToggle() {
-    const btn = document.getElementById('toggleSidebar');
-    const sidebar = document.querySelector('.sidebar');
-    const main = document.querySelector('.main-content');
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const sidebar = document.querySelector(".sidebar");
+    const mainContent = document.querySelector(".main-content");
+    const backdrop = document.querySelector(".backdrop");
 
-    if (!btn || !sidebar || !main) return;
+// 🔴 CEK DULU
+if (!toggleBtn || !sidebar || !mainContent) return;
 
-    btn.addEventListener('click', function () {
-        sidebar.classList.toggle('sidebar-collapsed');
-        main.classList.toggle('sidebar-collapsed');
+toggleBtn.addEventListener("click", () => {
+    if (window.innerWidth < 768) {
+        // MOBILE
+        sidebar.classList.toggle("sidebar-open");
+        if (backdrop) backdrop.classList.toggle("active");
+    } else {
+        // DESKTOP
+        sidebar.classList.toggle("sidebar-collapsed");
+        mainContent.classList.toggle("sidebar-collapsed");
+    }
+});
+
+// klik backdrop untuk tutup (mobile)
+if (backdrop) {
+    backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar-open");
+        backdrop.classList.remove("active");
     });
 }
-
+}

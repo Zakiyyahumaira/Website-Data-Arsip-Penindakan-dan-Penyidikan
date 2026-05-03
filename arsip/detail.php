@@ -73,6 +73,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
     <?php require '../config/sidebar.php'; ?>
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Detail Arsip</h1>
             <div class="topbar-actions">
                 <a href="daftar.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>
@@ -281,6 +282,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
             </div>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 </body>

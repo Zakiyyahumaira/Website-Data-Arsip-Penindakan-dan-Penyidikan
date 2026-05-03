@@ -88,6 +88,7 @@ $kecamatans = $pdo->query(
     <?php require '../config/sidebar.php'; ?>
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Referensi Data</h1>
         </div>
         <div class="page-body">
@@ -219,6 +220,7 @@ $kecamatans = $pdo->query(
             <?php endif; ?>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 </body>

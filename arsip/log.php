@@ -36,6 +36,7 @@ $msg = $_GET['msg'] ?? '';
 
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Log Aktivitas</h1>
             <div class="topbar-actions">
                 <?php if ($total > 0): ?>
@@ -117,6 +118,7 @@ $msg = $_GET['msg'] ?? '';
             </div>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 </body>

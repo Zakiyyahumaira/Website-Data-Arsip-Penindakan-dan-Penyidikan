@@ -53,6 +53,7 @@ $arsips = $stmt->fetchAll();
 
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>📁 <?= sanitize($map['nama_map']) ?></h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali ke Daftar Map</a>
@@ -118,6 +119,7 @@ $arsips = $stmt->fetchAll();
             <?php endif; ?>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 </body>

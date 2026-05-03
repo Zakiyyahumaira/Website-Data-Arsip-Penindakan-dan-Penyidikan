@@ -35,8 +35,7 @@ function isActive($pages) {
    Sidebar Component - Responsive
    ============================================================ -->
 
-<!-- Hamburger Toggle Button -->
-<button id="toggleSidebar" class="hamburger-btn">☰</button>
+
 <!-- Sidebar -->
 <!-- Default: visible (240px), tambahkan class .sidebar-collapsed untuk collapse -->
 <aside class="sidebar">
@@ -104,5 +103,3 @@ function isActive($pages) {
     </div>
 </aside>
 
-<!-- Backdrop for Mobile -->
-<div class="backdrop"></div>

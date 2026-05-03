@@ -252,6 +252,7 @@ $barangList = $barangList->fetchAll();
     <?php require '../config/sidebar.php'; ?>
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Edit Arsip</h1>
             <div class="topbar-actions">
                 <a href="detail.php?id=<?= $id ?>" class="btn btn-ghost btn-sm">&larr; Kembali</a>
@@ -554,6 +555,7 @@ $barangList = $barangList->fetchAll();
             </div>
         </div>
     </div>
+    <div class="backdrop"></div>
 </div>
 <script src="../js/main.js"></script>
 <script>

@@ -58,6 +58,7 @@ $perWilayah = $pdo->query(
     <div class="main-content">
         <div class="topbar">
             <!-- Hamburger button is now in sidebar.php -->
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Dashboard</h1>
             <div class="topbar-actions">
                 <span style="font-size:13px;color:#6b7280"><?= date('l, d F Y') ?></span>
@@ -159,10 +160,11 @@ $perWilayah = $pdo->query(
             </div>
         </div>
     </div>
+<div class="backdrop"></div>
 </div>
 <!-- End .app-layout -->
 
 <!-- Load Sidebar JavaScript -->
-<script src="js/sidebar.js"></script>
+<script src="js/main.js"></script>
 </body>
-</html>
+</html> 

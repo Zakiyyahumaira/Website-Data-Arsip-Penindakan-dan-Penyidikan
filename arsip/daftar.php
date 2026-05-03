@@ -68,7 +68,7 @@ $msg = $_GET['msg'] ?? '';
     <?php require '../config/sidebar.php'; ?>
     <div class="main-content">
         <div class="topbar">
-
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Daftar Arsip</h1>
             <div class="topbar-actions">
                 <a href="tambah.php" class="btn btn-primary btn-sm">+ Upload Arsip</a>
@@ -207,6 +207,7 @@ $msg = $_GET['msg'] ?? '';
             </div>
         </div>
     </div>
+    <div class="backdrop"></div>       
 </div>
 <script src="../js/main.js"></script>
 </body>
