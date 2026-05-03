@@ -84,10 +84,6 @@ $perWilayah = $pdo->query(
                     <div class="stat-icon violet">&#128194;</div>
                     <div><div class="stat-num"><?= $totalMap ?></div><div class="stat-label">Total Map</div></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon purple">&#128101;</div>
-                    <div><div class="stat-num"><?= $totalUser ?></div><div class="stat-label">Pengguna</div></div>
-                </div>
             </div>
         
 
@@ -126,7 +122,7 @@ $perWilayah = $pdo->query(
                 <div style="display:flex;flex-direction:column;gap:16px">
                     <!-- Per Jenis Pelanggaran -->
                     <div class="card">
-                        <div class="card-header"><h3>Per Jenis Pelanggaran</h3></div>
+                        <div class="card-header"><h3>Jenis Pelanggaran</h3></div>
                         <div class="card-body">
                             <?php foreach ($perJenis as $j): ?>
                             <?php $pct = $totalArsip > 0 ? round($j['total'] / $totalArsip * 100) : 0; ?>
@@ -146,7 +142,7 @@ $perWilayah = $pdo->query(
 
                     <!-- Per Wilayah -->
                     <div class="card">
-                        <div class="card-header"><h3>Per Wilayah</h3></div>
+                        <div class="card-header"><h3>Wilayah</h3></div>
                         <div class="card-body">
                             <?php foreach ($perWilayah as $w): ?>
                             <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:13px">

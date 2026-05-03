@@ -81,7 +81,7 @@ $mapList = getSemuaMap($pdo);
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>📁 Daftar Map/Folder</h1>
+            <h1>Daftar Map</h1>
             <div class="topbar-actions">
                 <a href="map_tambah.php" class="btn btn-primary btn-sm">+ Tambah Map Baru</a>
                 <a href="daftar.php" class="btn btn-ghost btn-sm">Ke Daftar Arsip</a>

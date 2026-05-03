@@ -30,12 +30,9 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
         <div class="login-right">
             <div class="login-card">
                 <div class="login-logo">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 8px;display:block">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-                    </svg>
-                    <h1>Sistem Arsip Kantor</h1>
-            <p>Masuk untuk mengelola dokumen arsip</p>
-        </div>
+                    <h1>Login Data Arsip</h1>
+                    <p>Masuk untuk mengelola dokumen arsip</p>
+                </div>
 
         <?php if ($error === 'wrong'): ?>
         <div class="alert alert-danger" data-dismiss="4000">

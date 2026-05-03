@@ -40,11 +40,14 @@ function isActive($pages) {
 <!-- Default: visible (240px), tambahkan class .sidebar-collapsed untuk collapse -->
 <aside class="sidebar">
     <div class="sidebar-brand">
-        <h2>
-            <span>&#128193;</span>
-            <span>Arsip Kantor</span>
-        </h2>
-        <span>Sistem Manajemen Arsip</span>
+        <img src="<?= $base ?>img/Logo_Bea_Cukai_Banda_Aceh.png" 
+            alt="Logo" 
+            class="brand-logo">
+
+        <div class="brand-text">
+            <h2>Arsip Kantor</h2>
+            <span>Sistem Manajemen Arsip</span>
+        </div>
     </div>
 
     <nav class="sidebar-nav">
