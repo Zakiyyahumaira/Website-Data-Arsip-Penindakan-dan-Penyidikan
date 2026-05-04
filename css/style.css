@@ -609,3 +609,63 @@ tbody tr:last-child td { border-bottom: none; }
     font-size: 10px;
     color: var(--sidebar-text);
 }
+
+/* FORCE POPPINS KE SEMUA BUTTON */
+button, 
+.btn, 
+.page-btn,
+input[type="submit"],
+input[type="button"] {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+}
+
+/* ICON EMOJI JUGA POPPINS */
+.stat-icon,
+.info-icon {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* SELECT & OPTION */
+select,
+select option {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* FORCE POPPINS KE SEMUA FORM */
+input,
+textarea,
+select {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+
+/* PLACEHOLDER */
+input::placeholder,
+textarea::placeholder {
+    font-family: 'Poppins', sans-serif !important;
+    color: var(--gray-400) !important;
+    font-weight: 400 !important;
+}
+
+/* FORM CONTROL SPESIFIK */
+.form-control {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* SELECT DROPDOWN */
+select,
+select option,
+select optgroup {
+    font-family: 'Poppins', sans-serif !important;
+    padding: 8px 12px;
+}
+
+/* DISABLED STATE */
+input:disabled,
+select:disabled,
+textarea:disabled {
+    font-family: 'Poppins', sans-serif !important;
+    background: var(--gray-100);
+}
