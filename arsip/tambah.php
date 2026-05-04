@@ -245,10 +245,9 @@ if (!empty($old['wilayah_id'])) {
 
     <div class="main-content">
         <div class="topbar">
+            <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Upload Arsip Baru</h1>
             <div class="topbar-actions">
-                <button id="toggleSidebar" class="hamburger-btn">☰</button>
-                <a href="daftar.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>
             </div>
         </div>
 

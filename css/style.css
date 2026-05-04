@@ -163,7 +163,7 @@ a:hover { text-decoration: underline; }
     padding: 14px 28px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
     position: sticky;
     top: 0;
     z-index: 50;
@@ -287,7 +287,7 @@ a:hover { text-decoration: underline; }
     gap: 16px;
 }
 .stat-icon {
-    width: 48px; height: 48px;
+    width: 50px; height: 50px;
     border-radius: var(--radius);
     display: flex;
     align-items: center;
