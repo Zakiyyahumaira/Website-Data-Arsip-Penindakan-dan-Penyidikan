@@ -88,15 +88,16 @@ $perWilayah = $pdo->query(
         
 
 
-            <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;align-items:start">
+            <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px;align-items:flex-start">
                 <!-- Arsip terbaru -->
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" style="flex-direction: row; justify-content: space-between; align-items: center;">
                         <h3>Arsip Terbaru</h3>
-                        <a href="arsip/daftar.php" class="btn btn-ghost btn-sm">Lihat Semua</a>
+                        <a href="arsip/daftar.php" class="btn btn-primary btn-sm">Lihat Semua</a>
                     </div>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="card-body">
+                        <div class="table-wrap">
+                            <table>
                             <thead><tr><th>No. Surat</th><th>Petugas</th><th>Map</th><th>Jenis Pelanggaran</th><th>Wilayah</th><th>Tanggal</th></tr></thead>
                             <tbody>
                             <?php if (empty($arsipTerbaru)): ?>
@@ -115,6 +116,7 @@ $perWilayah = $pdo->query(
                             <?php endif; ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 

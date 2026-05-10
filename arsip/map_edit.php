@@ -75,7 +75,7 @@ $mapList = $pdo->query(
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>📝 Edit Map</h1>
+            <h1>Edit Map</h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali</a>
             </div>
@@ -92,7 +92,7 @@ $mapList = $pdo->query(
             </div>
             <?php endif; ?>
 
-            <div class="card" style="max-width: 500px;">
+            <div class="card">
                 <div class="card-header"><h3>Formulir Edit Map</h3></div>
                 <div class="card-body">
                     <form method="POST">

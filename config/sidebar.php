@@ -46,7 +46,7 @@ function isActive($pages) {
 
         <div class="brand-text">
             <h2>Arsip Kantor</h2>
-            <span>Sistem Manajemen Arsip</span>
+            <span>Seksi Penindakan & Penyidikan</span>
         </div>
     </div>
 
@@ -78,7 +78,7 @@ function isActive($pages) {
 
         <a href="<?= $base ?>arsip/kategori.php" class="nav-item <?= isActive('arsip/kategori.php') ?>">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-            <span>Referensi Data</span>
+            <span>Jenis Pelanggaran</span>
         </a>
 
         <a href="<?= $base ?>arsip/pengguna.php" class="nav-item <?= isActive('arsip/pengguna.php') ?>">
@@ -102,7 +102,7 @@ function isActive($pages) {
         <strong><?= htmlspecialchars($_SESSION['nama'] ?? '') ?></strong>
         <?= ucfirst($_SESSION['role'] ?? '') ?>
         &nbsp;·&nbsp;
-        <a href="<?= $base ?>auth/logout.php" style="color:var(--gray-400)">Keluar</a>
+        <a href="<?= $base ?>auth/logout.php" style="color:var(--primary-dark)">Keluar</a>
     </div>
 </aside>
 

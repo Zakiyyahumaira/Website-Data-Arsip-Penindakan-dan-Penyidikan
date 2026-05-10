@@ -73,7 +73,7 @@ $kecamatans = $pdo->query(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referensi Data — Arsip Kantor</title>
+    <title>Jenis Pelanggaran — Arsip Kantor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
@@ -89,7 +89,7 @@ $kecamatans = $pdo->query(
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>Referensi Data</h1>
+            <h1>Jenis Pelanggaran</h1>
         </div>
         <div class="page-body">
             <?php if ($msg === 'tambah'): ?><div class="alert alert-success" data-dismiss="3000">Data berhasil ditambahkan.</div>

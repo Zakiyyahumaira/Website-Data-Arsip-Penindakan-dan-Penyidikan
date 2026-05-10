@@ -65,7 +65,7 @@ $users = $pdo->query(
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>Manajemen Pengguna</h1>
+            <h1>Pengguna</h1>
         </div>
 
         <div class="page-body">

@@ -38,7 +38,31 @@ $arsips = $stmt->fetchAll();
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .map-header { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .map-header {
+        background-color: #f9fafb !important;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        }
+        .map-header strong {
+        font-weight: normal;
+        display: inline-block;
+        width: 150px;
+        position: relative;
+        }
+
+        /* rapikan posisi titik dua */
+        .map-header strong::after {
+        content: ":";
+        position: absolute;
+        right: 7px;
+        }
+
+        /* hilangkan titik dua asli */
+        .map-header strong {
+        text-align: left;
+        }
         .arsip-table { width: 100%; border-collapse: collapse; }
         .arsip-table th { background: #f3f4f6; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #d1d5db; }
         .arsip-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
@@ -54,7 +78,7 @@ $arsips = $stmt->fetchAll();
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>📁 <?= sanitize($map['nama_map']) ?></h1>
+            <h1><?= sanitize($map['nama_map']) ?></h1>
             <div class="topbar-actions">
                 <a href="map.php" class="btn btn-ghost btn-sm">&larr; Kembali ke Daftar Map</a>
             </div>
@@ -63,9 +87,9 @@ $arsips = $stmt->fetchAll();
         <div class="page-body">
             <!-- Map Header Info -->
             <div class="map-header">
-                <div><strong>Nama Map:</strong> <?= sanitize($map['nama_map']) ?></div>
-                <div><strong>Deskripsi:</strong> <?= sanitize($map['deskripsi'] ?? 'Tidak ada') ?></div>
-                <div><strong>Dibuat:</strong> <?= formatTanggal($map['created_at']) ?></div>
+                <div><strong>Nama Map</strong> <?= sanitize($map['nama_map']) ?></div>
+                <div><strong>Deskripsi</strong> <?= sanitize($map['deskripsi'] ?? 'Tidak ada') ?></div>
+                <div><strong>Dibuat</strong> <?= formatTanggal($map['created_at']) ?></div>
                 <div style="margin-top: 10px;">
                     <a href="map_edit.php?id=<?= $map['id'] ?>" class="btn btn-sm" style="background:#dbeafe;color:#1e40af;">Edit</a>
                     <a href="tambah.php?map_id=<?= $map['id'] ?>" class="btn btn-primary btn-sm">+ Upload Arsip ke Map Ini</a>
@@ -73,7 +97,7 @@ $arsips = $stmt->fetchAll();
             </div>
 
             <!-- Daftar Arsip dalam Map -->
-            <h3 style="margin-bottom: 15px;">📄 Arsip dalam Map Ini</h3>
+            <h3 style="margin-bottom: 15px;">Arsip dalam Map Ini</h3>
             <?php if (empty($arsips)): ?>
             <div class="alert alert-info">
                 Belum ada arsip dalam map ini. <a href="tambah.php?map_id=<?= $map['id'] ?>">Upload arsip sekarang</a>

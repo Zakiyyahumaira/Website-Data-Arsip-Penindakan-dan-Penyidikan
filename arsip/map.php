@@ -66,8 +66,8 @@ $mapList = getSemuaMap($pdo);
             cursor: pointer;
             border-radius: 4px;
         }
-        .map-card-link { background: #f3f4f6; color: #374151; }
-        .map-card-link:hover { background: #e5e7eb; }
+        .map-card-link { background: #dcfce7; color: #166534; } 
+        .map-card-link:hover { background: #cfead6; }
         .map-card-edit { background: #dbeafe; color: #1e40af; }
         .map-card-edit:hover { background: #bfdbfe; }
         .map-card-del { background: #fee2e2; color: #991b1b; }
@@ -84,7 +84,6 @@ $mapList = getSemuaMap($pdo);
             <h1>Daftar Map</h1>
             <div class="topbar-actions">
                 <a href="map_tambah.php" class="btn btn-primary btn-sm">+ Tambah Map Baru</a>
-                <a href="daftar.php" class="btn btn-ghost btn-sm">Ke Daftar Arsip</a>
             </div>
         </div>
 
