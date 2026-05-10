@@ -105,7 +105,7 @@ $perWilayah = $pdo->query(
                             <?php else: ?>
                                 <?php foreach ($arsipTerbaru as $a): ?>
                                 <tr>
-                                    <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
+                                    <td><code style="font-size:12px;padding:2px 6px;border-radius:4px;font-family:'Poppins',sans-serif"><?= sanitize($a['no_surat']) ?></code></td>
                                     <td><a href="arsip/detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                                     <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                     <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>

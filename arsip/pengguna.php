@@ -57,6 +57,11 @@ $users = $pdo->query(
     <title>Pengguna — Arsip Kantor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
@@ -143,7 +148,10 @@ $users = $pdo->query(
                                     <?php if ($u['id'] !== (int)$_SESSION['user_id']): ?>
                                     <a href="pengguna.php?hapus=<?= $u['id'] ?>"
                                        onclick="return confirm('Hapus pengguna <?= addslashes(sanitize($u['nama'])) ?>?')"
-                                       class="btn btn-danger btn-sm">Hapus</a>
+                                       class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#dc2626;border:none;cursor:pointer;font-size:inherit" title="Hapus">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                        Hapus
+                                    </a>
                                     <?php else: ?>
                                     <span style="font-size:12px;color:#9ca3af">Anda</span>
                                     <?php endif; ?>

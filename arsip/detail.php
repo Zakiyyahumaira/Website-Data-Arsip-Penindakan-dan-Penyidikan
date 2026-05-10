@@ -91,7 +91,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                     <div class="card-header">
                         <div>
                             <h3><?= sanitize(($arsip['petugas_1'] ?? '-') . ' / ' . ($arsip['petugas_2'] ?? '-')) ?></h3>
-                            <code style="font-size:12px;background:#f3f4f6;padding:2px 8px;border-radius:4px;margin-top:4px;display:inline-block">
+                            <code style="font-size:12px;padding:2px 8px;border-radius:4px;margin-top:4px;display:inline-block;font-family:'Poppins',sans-serif">
                                 <?= sanitize($arsip['no_surat']) ?>
                             </code>
                         </div>

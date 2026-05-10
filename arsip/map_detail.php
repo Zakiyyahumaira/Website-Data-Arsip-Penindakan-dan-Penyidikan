@@ -38,6 +38,9 @@ $arsips = $stmt->fetchAll();
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        .action-link:hover {
+            text-decoration: underline;
+        }
         .map-header {
         background-color: #f9fafb !important;
         border: 1px solid #e5e7eb;
@@ -63,9 +66,11 @@ $arsips = $stmt->fetchAll();
         .map-header strong {
         text-align: left;
         }
-        .arsip-table { width: 100%; border-collapse: collapse; }
-        .arsip-table th { background: #f3f4f6; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #d1d5db; }
-        .arsip-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 0; margin: 0; }
+        .arsip-table { width: 100%; min-width: 760px; border-collapse: collapse; }
+        .arsip-table th, .arsip-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .arsip-table td:nth-child(2) { white-space: normal; overflow: visible; text-overflow: clip; }
+        .arsip-table th { background: #f3f4f6; text-align: left; font-weight: 600; border-bottom: 2px solid #d1d5db; }
         .arsip-table tr:hover { background: #f9fafb; }
         .btn-group { display: flex; gap: 8px; }
         .btn-sm { padding: 6px 12px; font-size: 12px; }
@@ -103,23 +108,24 @@ $arsips = $stmt->fetchAll();
                 Belum ada arsip dalam map ini. <a href="tambah.php?map_id=<?= $map['id'] ?>">Upload arsip sekarang</a>
             </div>
             <?php else: ?>
-            <table class="arsip-table">
-                <thead>
-                    <tr>
-                        <th>No. Surat</th>
-                        <th>Petugas</th>
-                        <th>Jenis Pelanggaran</th>
-                        <th>Jumlah</th>
-                        <th>Tanggal Dokumen</th>
-                        <th>File</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($arsips as $a): ?>
+            <div class="table-wrap">
+                <table class="arsip-table">
+                    <thead>
+                        <tr>
+                            <th>No. Surat</th>
+                            <th>Petugas</th>
+                            <th>Jenis Pelanggaran</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal Dokumen</th>
+                            <th>File</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($arsips as $a): ?>
                     <tr>
                         <td><?= sanitize($a['no_surat']) ?></td>
-                        <td><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></td>
+                        <td><a href="detail.php?id=<?= $a['id'] ?>" style="color:#1e40af;text-decoration:none"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                         <td><?= sanitize($a['nama_pelanggaran'] ?? '') ?></td>
                         <td><?= formatJumlah($a['jumlah'], $a['satuan']) ?></td>
                         <td><?= formatTanggal($a['tanggal_dokumen']) ?></td>
@@ -131,15 +137,22 @@ $arsips = $stmt->fetchAll();
                             <?php endif; ?>
                         </td>
                         <td>
-                            <div class="btn-group">
-                                <a href="detail.php?id=<?= $a['id'] ?>" class="btn btn-sm" style="background:#dbeafe;color:#1e40af;">Detail</a>
-                                <a href="edit.php?id=<?= $a['id'] ?>" class="btn btn-sm" style="background:#dcfce7;color:#166534;">Edit</a>
+                            <div style="display:flex;flex-direction:column;gap:6px">
+                                <a href="detail.php?id=<?= $a['id'] ?>" class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#1e40af;border:none;cursor:pointer;font-size:inherit" title="Detail">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Detail
+                                </a>
+                                <a href="edit.php?id=<?= $a['id'] ?>" class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#166534;border:none;cursor:pointer;font-size:inherit" title="Edit">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    Edit
+                                </a>
                             </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
             <?php endif; ?>
         </div>
     </div>

@@ -62,6 +62,11 @@ $msg = $_GET['msg'] ?? '';
     <title>Daftar Arsip — Arsip Kantor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
@@ -153,7 +158,7 @@ $msg = $_GET['msg'] ?? '';
                             <?php foreach ($arsips as $i => $a): ?>
                             <tr>
                                 <td style="color:#9ca3af"><?= $offset + $i + 1 ?></td>
-                                <td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px"><?= sanitize($a['no_surat']) ?></code></td>
+                                <td><code style="font-size:12px;padding:2px 6px;border-radius:4px;font-family:'Poppins',sans-serif"><?= sanitize($a['no_surat']) ?></code></td>
                                 <td><a href="detail.php?id=<?= $a['id'] ?>"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                                 <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                 <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
@@ -172,11 +177,20 @@ $msg = $_GET['msg'] ?? '';
                                     <?php else: ?><span style="color:#9ca3af;font-size:12px">-</span><?php endif; ?>
                                 </td>
                                 <td>
-                                    <div style="display:flex;gap:4px">
-                                        <a href="detail.php?id=<?= $a['id'] ?>" class="btn btn-ghost btn-sm" title="Detail">&#128269;</a>
-                                        <a href="edit.php?id=<?= $a['id'] ?>" class="btn btn-outline btn-sm" title="Edit">&#9998;</a>
+                                    <div style="display:flex;flex-direction:column;gap:6px">
+                                        <a href="detail.php?id=<?= $a['id'] ?>" class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#1e40af;border:none;cursor:pointer;font-size:inherit" title="Detail">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                            Detail
+                                        </a>
+                                        <a href="edit.php?id=<?= $a['id'] ?>" class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#166534;border:none;cursor:pointer;font-size:inherit" title="Edit">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            Edit
+                                        </a>
                                         <button onclick="konfirmasiHapus(<?= $a['id'] ?>, '<?= addslashes(sanitize($a['petugas_1'] . ' / ' . $a['petugas_2'])) ?>')"
-                                            class="btn btn-danger btn-sm" title="Hapus">&#128465;</button>
+                                            class="action-link" style="display:flex;align-items:center;gap:6px;padding:0;background:transparent;color:#dc2626;border:none;cursor:pointer;font-size:inherit" title="Hapus">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                            Hapus
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
