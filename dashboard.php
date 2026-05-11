@@ -69,19 +69,19 @@ $perWilayah = $pdo->query(
         <div class="page-body">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon blue">&#128193;</div>
+                    <div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
                     <div><div class="stat-num"><?= $totalArsip ?></div><div class="stat-label">Total Arsip</div></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon green">&#128200;</div>
+                    <div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
                     <div><div class="stat-num"><?= $arsipBulanIni ?></div><div class="stat-label">Arsip Bulan Ini</div></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon amber">&#9888;</div>
+                    <div class="stat-icon amber"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
                     <div><div class="stat-num"><?= $totalJenis ?></div><div class="stat-label">Jenis Pelanggaran</div></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon violet">&#128194;</div>
+                    <div class="stat-icon violet"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div>
                     <div><div class="stat-num"><?= $totalMap ?></div><div class="stat-label">Total Map</div></div>
                 </div>
             </div>
