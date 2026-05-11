@@ -29,6 +29,11 @@ $msg = $_GET['msg'] ?? '';
     <title>Log Aktivitas — Arsip Kantor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .action-link:hover { text-decoration: underline; }
+        .action-links { display: flex; flex-direction: column; gap: 8px; }
+        .action-link { display: flex; align-items: center; gap: 6px; padding: 0; background: transparent; border: none; cursor: pointer; font-size: inherit; color: inherit; text-decoration: none; }
+    </style>
 </head>
 <body>
 <div class="app-layout">
@@ -87,11 +92,16 @@ $msg = $_GET['msg'] ?? '';
                                 <?= date('d/m/Y H:i', strtotime($l['waktu'])) ?>
                             </td>
                             <td>
-                                <form method="GET" action="hapus_log.php" style="display:inline;">
-                                    <input type="hidden" name="action" value="single">
-                                    <input type="hidden" name="id" value="<?= $l['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus log aktivitas ini?')" title="Hapus">🗑</button>
-                                </form>
+                                <div class="action-links">
+                                    <form method="GET" action="hapus_log.php" style="display:inline;">
+                                        <input type="hidden" name="action" value="single">
+                                        <input type="hidden" name="id" value="<?= $l['id'] ?>">
+                                        <button type="submit" class="action-link" style="color:#dc2626;" onclick="return confirm('Hapus log aktivitas ini?')" title="Hapus">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>

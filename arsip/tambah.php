@@ -246,7 +246,7 @@ if (!empty($old['wilayah_id'])) {
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>Upload Arsip Baru</h1>
+            <h1>Upload Arsip</h1>
             <div class="topbar-actions">
             </div>
         </div>

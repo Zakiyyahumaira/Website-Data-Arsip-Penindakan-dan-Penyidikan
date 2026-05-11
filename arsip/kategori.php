@@ -81,6 +81,9 @@ $kecamatans = $pdo->query(
         .tab-btn { padding:9px 20px; border-radius:var(--radius); font-size:14px; font-weight:500;
                    border:1px solid var(--gray-200); background:#fff; cursor:pointer; color:var(--gray-600); text-decoration:none; }
         .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .action-link:hover { text-decoration: underline; }
+        .action-links { display: flex; flex-direction: column; gap: 8px; }
+        .action-link { display: flex; align-items: center; gap: 6px; padding: 0; background: transparent; border: none; cursor: pointer; font-size: inherit; color: inherit; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -205,9 +208,14 @@ $kecamatans = $pdo->query(
                                 <td><span class="badge badge-blue"><?= $k['total'] ?></span></td>
                                 <td>
                                     <?php if ($k['total'] == 0): ?>
-                                    <a href="kategori.php?tab=wilayah&hapus_kecamatan=<?= $k['id'] ?>"
-                                       onclick="return confirm('Hapus kecamatan ini?')"
-                                       class="btn btn-danger btn-sm">Hapus</a>
+                                    <div class="action-links">
+                                        <a href="kategori.php?tab=wilayah&hapus_kecamatan=<?= $k['id'] ?>"
+                                           onclick="return confirm('Hapus kecamatan ini?')"
+                                           class="action-link" style="color:#dc2626;" title="Hapus">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                                            Hapus
+                                        </a>
+                                    </div>
                                     <?php else: ?><span style="font-size:12px;color:#9ca3af">Ada arsip</span><?php endif; ?>
                                 </td>
                             </tr>

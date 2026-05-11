@@ -92,23 +92,65 @@ $arsips = $stmt->fetchAll();
         <div class="page-body">
             <!-- Map Header Info -->
             <div class="map-header">
-                <div><strong>Nama Map</strong> <?= sanitize($map['nama_map']) ?></div>
-                <div><strong>Deskripsi</strong> <?= sanitize($map['deskripsi'] ?? 'Tidak ada') ?></div>
-                <div><strong>Dibuat</strong> <?= formatTanggal($map['created_at']) ?></div>
-                <div style="margin-top: 10px;">
-                    <a href="map_edit.php?id=<?= $map['id'] ?>" class="btn btn-sm" style="background:#dbeafe;color:#1e40af;">Edit</a>
+                <!-- Bagian 1: Info Map (3 kolom horizontal) -->
+                <div class="map-info-section">
+                    <div class="info-column">
+                        <div class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 7 7 2h10l5 5v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"/>
+                                <polyline points="9 11 12 14 22 4"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Nama Map</div>
+                            <div class="info-value"><?= sanitize($map['nama_map']) ?></div>
+                        </div>
+                    </div>
+                    <div class="info-column">
+                        <div class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/>
+                                <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Deskripsi</div>
+                            <div class="info-value"><?= sanitize($map['deskripsi'] ?? 'Tidak ada') ?></div>
+                        </div>
+                    </div>
+                    <div class="info-column">
+                        <div class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Dibuat</div>
+                            <div class="info-value"><?= formatTanggal($map['created_at']) ?></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bagian 2: Tombol Actions -->
+                <div class="map-actions-section">
+                    <a href="map_edit.php?id=<?= $map['id'] ?>" class="btn btn-sm btn-edit" style="background:#dbeafe;color:#1e40af;">Edit</a>
                     <a href="tambah.php?map_id=<?= $map['id'] ?>" class="btn btn-primary btn-sm">+ Upload Arsip ke Map Ini</a>
                 </div>
             </div>
 
             <!-- Daftar Arsip dalam Map -->
-            <h3 style="margin-bottom: 15px;">Arsip dalam Map Ini</h3>
+            <div class="card">
+                <div class="card-header"><h3>Arsip dalam Map Ini</h3></div>
+                <div class="card-body">
             <?php if (empty($arsips)): ?>
             <div class="alert alert-info">
                 Belum ada arsip dalam map ini. <a href="tambah.php?map_id=<?= $map['id'] ?>">Upload arsip sekarang</a>
             </div>
             <?php else: ?>
-            <div class="table-wrap">
+            <div class="table-wrap" style="padding:0;margin:0">
                 <table class="arsip-table">
                     <thead>
                         <tr>
@@ -154,6 +196,8 @@ $arsips = $stmt->fetchAll();
             </table>
             </div>
             <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="backdrop"></div>

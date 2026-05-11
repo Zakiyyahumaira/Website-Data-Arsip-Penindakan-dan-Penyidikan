@@ -93,7 +93,7 @@ $msg = $_GET['msg'] ?? '';
                         <div class="search-wrap" style="flex:1;min-width:200px">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                             <input class="form-control" type="text" name="q"
-                                   placeholder="Cari nama pegawai, no. surat, nama tempat..."
+                                   placeholder="Cari nama pegawai, no. surat, nama tempat"
                                    value="<?= sanitize($search) ?>">
                         </div>
                         <select class="form-control" name="jenis" onchange="this.form.submit()" style="width:auto">
@@ -226,3 +226,54 @@ $msg = $_GET['msg'] ?? '';
 <script src="../js/main.js"></script>
 </body>
 </html>
+
+<script>
+let tooltipHandler = null;
+
+document.querySelector('.search-wrap input').addEventListener('click', function(e) {
+    e.stopPropagation();
+    
+    const oldTip = document.getElementById('searchTip');
+    if (oldTip) oldTip.remove();
+    
+    const rect = this.getBoundingClientRect();
+    
+    const tip = document.createElement('div');
+    tip.id = 'searchTip';
+    tip.textContent = 'Cari nama pegawai, no. surat, nama tempat...';
+    tip.style.cssText = `
+        position:fixed !important;
+        top:${rect.top - 50}px !important;
+        left:${rect.left + rect.width/2}px !important;
+        transform:translateX(-50%) !important;
+        background:#1f2937 !important;color:white !important;
+        padding:12px 18px !important;border-radius:10px !important;
+        font-size:14px !important;font-weight:500 !important;
+        white-space:nowrap !important;
+        z-index:999999 !important;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif !important;
+    `;
+    
+    const arrow = document.createElement('div');
+    arrow.style.cssText = `
+        position:absolute !important;bottom:-8px !important;
+        left:50% !important;transform:translateX(-50%) !important;
+        width:0 !important;height:0 !important;
+        border-left:10px solid transparent !important;
+        border-right:10px solid transparent !important;
+        border-top:10px solid #1f2937 !important;
+    `;
+    tip.appendChild(arrow);
+    
+    document.body.appendChild(tip);
+    
+    if (tooltipHandler) document.removeEventListener('click', tooltipHandler);
+    tooltipHandler = e => {
+        if (!document.querySelector('.search-wrap').contains(e.target)) {
+            document.getElementById('searchTip')?.remove();
+            document.removeEventListener('click', tooltipHandler);
+        }
+    };
+    document.addEventListener('click', tooltipHandler);
+});
+</script>
