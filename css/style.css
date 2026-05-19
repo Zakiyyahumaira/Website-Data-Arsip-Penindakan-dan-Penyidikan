@@ -3,11 +3,11 @@
    ============================================================ */
 
 :root {
-    --primary: #1e40af;           /* Biru tua elegan (🇮🇩 Merah Putih inspired) */
+    --primary: #1e40af;           
     --primary-dark: #1e3a8a;
     --primary-light: #dbeafe;
-    --success: #059669;           /* Hijau tua profesional */
-    --danger: #dc2626;            /* Merah 🇮🇩 */
+    --success: #059669;           
+    --danger: #dc2626;          
     --warning: #d97706;
     --gray-50: #f8fafc;
     --gray-100: #f1f5f9;
@@ -196,9 +196,7 @@ a:hover { text-decoration: underline; }
 }
 
 .app-layout .hamburger-btn {
-    /* ... styles yang sudah ada ... */
-    
-    /* ✅ Base position untuk mobile */
+    /*Base position untuk mobile */
     position: fixed;
     top: 14px;
     left: 14px;
@@ -827,4 +825,5 @@ textarea:disabled {
     width: 20px;
     height: 20px;
 }
+
 

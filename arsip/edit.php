@@ -545,6 +545,8 @@ $barangList = $barangList->fetchAll();
                                     accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png">
                                 <div class="form-hint" id="filePreview">Kosongkan jika tidak ingin ganti file</div>
                             </div>
+                        </div>  
+                        </div> 
 
                         <div style="display:flex;gap:12px;margin-top:8px">
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>

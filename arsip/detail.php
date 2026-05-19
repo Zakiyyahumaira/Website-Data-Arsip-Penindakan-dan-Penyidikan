@@ -272,10 +272,24 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                     <div class="card">
                         <div class="card-header"><h3>Aksi Cepat</h3></div>
                         <div class="card-body" style="display:flex;flex-direction:column;gap:8px">
-                            <a href="edit.php?id=<?= $arsip['id'] ?>" class="btn btn-outline" style="justify-content:center">&#9998; Edit Arsip</a>
-                            <button onclick="window.print()" class="btn btn-ghost" style="justify-content:center">&#128424; Cetak Detail</button>
+
+                            <button onclick="window.location.href='edit.php?id=<?= $arsip['id'] ?>'"
+                                class="btn"
+                                style="background:#2563eb; color:#fff; display:flex; justify-content:center; align-items:center; gap:6px;">
+                                ✎ Edit Arsip
+                            </button>
+                            <a href="cetak.php?id=<?= $arsip['id'] ?>" 
+                                target="_blank"
+                                style= "background:#059669; color:#fff; display:flex; justify-content:center; align-items:center; gap:6px;"
+                                class="btn btn-primary">
+                                🖨 Cetak
+                            </a>
                             <button onclick="konfirmasiHapus(<?= $arsip['id'] ?>, '<?= addslashes(sanitize(($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-'))) ?>')"
-                                class="btn btn-danger" style="justify-content:center">&#128465; Hapus Arsip</button>
+                                class="btn btn-danger"
+                                style="display:flex; justify-content:center; align-items:center; gap:6px;">
+                                🗑 Hapus Arsip
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -287,3 +301,5 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
 <script src="../js/main.js"></script>
 </body>
 </html>
+
+
