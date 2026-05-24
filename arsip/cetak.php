@@ -86,85 +86,164 @@ $barangList = $barangList->fetchAll();
 <style>
 
 @page{
-    size:A4;
-    margin:25px;
+    size: A4;
+    margin: 30mm 25mm 30mm 25mm;
 }
 
 body{
-    font-family:"Times New Roman", serif;
-    font-size:12pt;
-    color:#000;
-    margin:0;
-    padding:0;
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
 }
 
+/* =========================
+   GLOBAL
+========================= */
+
 table{
-    width:100%;
-    border-collapse:collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 td{
-    vertical-align:top;
-    padding:2px 4px;
+    vertical-align: top;
+    padding: 3px 0;
 }
 
+
+/* =========================
+   KOP SURAT
+========================= */
+
 .kop-wrapper{
-    width:100%;
-    border-bottom:3px solid #000;
-    padding-bottom:10px;
-    margin-bottom:25px;
+    width: 100%;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.kop-table{
+    width: 100%;
+}
+
+.kop-table td{
+    vertical-align: middle;
+    padding: 0;
+}
+
+.logo-cell{
+    width: 95px;
+    text-align: center;
 }
 
 .logo{
-    width:90px;
+    width: 74px;
 }
 
 .kop-text{
-    text-align:center;
-    line-height:1.2;
+    text-align: center;
+    line-height: 1.3;
+    padding-right: 20px;
 }
 
 .kop-1{
-    font-size:16pt;
-    font-weight:bold;
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: 0.3px;
 }
 
 .kop-2{
-    font-size:15pt;
-    font-weight:bold;
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: 0.3px;
 }
 
 .kop-3{
-    font-size:13pt;
-    font-weight:bold;
+    font-size: 12pt;
+    font-weight: bold;
+    letter-spacing: 0.2px;
 }
 
-.kop-4{
-    font-size:10pt;
-    margin-top:2px;
-}
+/* =========================
+   JUDUL
+========================= */
 
 .judul{
-    text-align:center;
-    font-weight:bold;
-    margin-top:20px;
-    margin-bottom:25px;
-    font-size:18pt;
-    text-decoration:underline;
+    text-align: center;
+    font-size: 18pt;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 35px;
+    letter-spacing: 0.5px;
 }
 
-.info-table td{
-    padding:3px 4px;
+/* =========================
+   TABEL UTAMA
+========================= */
+
+.info-table{
+    width: 100%;
+    table-layout: fixed;
 }
+
+.no{
+    width: 40px;
+}
+
+.label{
+    width: 240px;
+}
+
+.titik{
+    width: 25px;
+    text-align: center;
+}
+
+.isi{
+    width: auto;
+    text-align: justify;
+}
+
+/* =========================
+   SUB TABLE
+========================= */
 
 .sub-table{
-    margin-left:40px;
-    margin-bottom:12px;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    table-layout: fixed;
 }
 
+.sub-no{
+    width: 40px;
+}
+
+.sub-label{
+    width: 240px;
+}
+
+.sub-titik{
+    width: 25px;
+    text-align: center;
+}
+
+/* =========================
+   PRINT
+========================= */
+
 @media print{
+
     body{
-        zoom:100%;
+        zoom: 100%;
+    }
+
+    .info-table,
+    .sub-table{
+        page-break-inside: avoid;
     }
 }
 
@@ -173,15 +252,17 @@ td{
 
 <body>
 
-<!-- KOP SURAT -->
+<!-- =========================
+     KOP SURAT
+========================= -->
 
 <div class="kop-wrapper">
 
-    <table>
+    <table class="kop-table">
 
         <tr>
 
-            <td width="110" align="center">
+            <td class="logo-cell">
                 <img src="../assets/logo_kemenkeu.png" class="logo">
             </td>
 
@@ -196,31 +277,19 @@ td{
                 </div>
 
                 <div class="kop-3">
-                    KANTOR WILAYAH DIREKTORAT JENDERAL BEA DAN CUKAI ACEH
+                    KANTOR WILAYAH DIREKTORAT JENDERAL
                 </div>
 
                 <div class="kop-3">
-                    KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI TIPE MADYA
+                    BEA DAN CUKAI ACEH
                 </div>
 
                 <div class="kop-3">
-                    PABEAN C BANDA ACEH
+                    KANTOR PENGAWASAN DAN PELAYANAN BEA DAN CUKAI
                 </div>
 
-                <div class="kop-4">
-                    Jalan Soekarno Hatta Nomor 3A, Geuceu Menara, Banda Aceh 23241
-                </div>
-
-                <div class="kop-4">
-                    TELEPON (0651) 43137, FAKSIMILE (0651) 43136
-                </div>
-
-                <div class="kop-4">
-                    LAMAN www.beacukai.go.id; PUSAT KONTAK LAYANAN 1500225
-                </div>
-
-                <div class="kop-4">
-                    SUREL beaaceh@customs.go.id
+                <div class="kop-3">
+                    TIPE MADYA PABEAN C BANDA ACEH
                 </div>
 
             </td>
@@ -231,122 +300,135 @@ td{
 
 </div>
 
-<!-- JUDUL -->
+<!-- =========================
+     JUDUL
+========================= -->
 
 <div class="judul">
     ARSIP PENINDAKAN
 </div>
 
-<!-- INFORMASI -->
+<!-- =========================
+     INFORMASI UTAMA
+========================= -->
 
 <table class="info-table">
 
 <tr>
-    <td width="40">1.</td>
-    <td width="220">MAP</td>
-    <td width="20">:</td>
-    <td><?= sanitize($arsip['map_id'] ?? '-') ?></td>
+    <td class="no">1.</td>
+    <td class="label">MAP</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['map_id'] ?? '-') ?></td>
 </tr>
 
 <tr>
-    <td>2.</td>
-    <td>No. Surat</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['no_surat']) ?></td>
+    <td class="no">2.</td>
+    <td class="label">No. Surat</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['no_surat']) ?></td>
 </tr>
 
 <tr>
-    <td>3.</td>
-    <td>Petugas</td>
-    <td>:</td>
-    <td>
+    <td class="no">3.</td>
+    <td class="label">Petugas</td>
+    <td class="titik">:</td>
+    <td class="isi">
         1) <?= sanitize($arsip['petugas_1']) ?><br>
         2) <?= sanitize($arsip['petugas_2']) ?>
     </td>
 </tr>
 
 <tr>
-    <td>4.</td>
-    <td>Jenis Pelanggaran</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['nama_pelanggaran']) ?></td>
+    <td class="no">4.</td>
+    <td class="label">Jenis Pelanggaran</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['nama_pelanggaran']) ?></td>
 </tr>
 
 <tr>
-    <td>5.</td>
-    <td>Wilayah</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['nama_wilayah']) ?></td>
+    <td class="no">5.</td>
+    <td class="label">Wilayah</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['nama_wilayah']) ?></td>
 </tr>
 
 <tr>
-    <td>6.</td>
-    <td>Kecamatan</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['nama_kecamatan']) ?></td>
+    <td class="no">6.</td>
+    <td class="label">Kecamatan</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['nama_kecamatan']) ?></td>
 </tr>
 
 <tr>
-    <td>7.</td>
-    <td>Nama Tempat</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['nama_tempat']) ?></td>
+    <td class="no">7.</td>
+    <td class="label">Nama Tempat</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['nama_tempat']) ?></td>
 </tr>
 
 <tr>
-    <td>8.</td>
-    <td>Waktu Penindakan</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['waktu_penindakan']) ?></td>
+    <td class="no">8.</td>
+    <td class="label">Waktu Penindakan</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['waktu_penindakan']) ?></td>
 </tr>
 
 <tr>
-    <td>9.</td>
-    <td>Tanggal Dokumen</td>
-    <td>:</td>
-    <td><?= sanitize($arsip['tanggal_dokumen']) ?></td>
+    <td class="no">9.</td>
+    <td class="label">Tanggal Dokumen</td>
+    <td class="titik">:</td>
+    <td class="isi"><?= sanitize($arsip['tanggal_dokumen']) ?></td>
 </tr>
 
 <tr>
-    <td>10.</td>
-    <td>Pelaku</td>
-    <td>:</td>
+    <td class="no">10.</td>
+    <td class="label">Pelaku</td>
+    <td class="titik">:</td>
     <td></td>
 </tr>
 
 </table>
+
+<!-- =========================
+     DATA PELAKU
+========================= -->
 
 <?php foreach($pelakuList as $i => $p): ?>
 
 <table class="sub-table">
 
 <tr>
-    <td width="220">Nama</td>
-    <td width="20">:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Nama</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($p['nama']) ?></td>
 </tr>
 
 <tr>
-    <td>Identitas</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Identitas</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($p['identitas']) ?></td>
 </tr>
 
 <tr>
-    <td>No. Identitas</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">No. Identitas</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($p['no_identitas']) ?></td>
 </tr>
 
 <tr>
-    <td>Jenis Kelamin</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Jenis Kelamin</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($p['jenis_kelamin']) ?></td>
 </tr>
 
 <tr>
-    <td>Alamat</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Alamat</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($p['alamat']) ?></td>
 </tr>
 
@@ -354,12 +436,16 @@ td{
 
 <?php endforeach; ?>
 
+<!-- =========================
+     BARANG HASIL PENINDAKAN
+========================= -->
+
 <table class="info-table">
 
 <tr>
-    <td width="40">11.</td>
-    <td width="220">Barang Hasil Penindakan</td>
-    <td width="20">:</td>
+    <td class="no">11.</td>
+    <td class="label">Barang Hasil Penindakan</td>
+    <td class="titik">:</td>
     <td></td>
 </tr>
 
@@ -370,32 +456,37 @@ td{
 <table class="sub-table">
 
 <tr>
-    <td width="220">Nama Barang</td>
-    <td width="20">:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Nama Barang</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($b['nama_barang']) ?></td>
 </tr>
 
 <tr>
-    <td>Jenis Barang</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Jenis Barang</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($b['jenis_barang']) ?></td>
 </tr>
 
 <tr>
-    <td>Jumlah</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Jumlah</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($b['jumlah_barang']) ?></td>
 </tr>
 
 <tr>
-    <td>Satuan</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Satuan</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($b['satuan']) ?></td>
 </tr>
 
 <tr>
-    <td>Jenis Uraian Barang</td>
-    <td>:</td>
+    <td class="sub-no"></td>
+    <td class="sub-label">Jenis Uraian Barang</td>
+    <td class="sub-titik">:</td>
     <td><?= sanitize($b['jenis_uraian_barang']) ?></td>
 </tr>
 

@@ -45,7 +45,7 @@ function isActive($pages) {
             class="brand-logo">
 
         <div class="brand-text">
-            <h2>Arsip Kantor</h2>
+            <h2>Data Arsip</h2>
             <span>Seksi Penindakan & Penyidikan</span>
         </div>
     </div>
