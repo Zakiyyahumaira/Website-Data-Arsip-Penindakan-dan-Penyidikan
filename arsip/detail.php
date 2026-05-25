@@ -259,7 +259,7 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                                 <div style="font-size:48px;margin-bottom:10px"><?= $fileIcon ?></div>
                                 <p style="font-size:13px;color:#374151;margin-bottom:4px;word-break:break-all"><?= sanitize($arsip['file_name']) ?></p>
                                 <p style="font-size:12px;color:#9ca3af;margin-bottom:16px"><?= strtoupper($ext) ?> file</p>
-                                <a href="../<?= $arsip['file_path'] ?>" target="_blank"
+                                <a href="../<?= sanitize(normalizeFilePath($arsip['file_path'])) ?>" target="_blank"
                                    class="btn btn-primary" style="justify-content:center;width:100%">
                                     &#11015; Unduh / Buka File
                                 </a>

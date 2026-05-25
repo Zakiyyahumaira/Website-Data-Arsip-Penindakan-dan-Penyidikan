@@ -41,6 +41,11 @@ function formatJumlah($angka, $satuan = '') {
     return $formatted . ($satuan ? ' ' . $satuan : '');
 }
 
+function normalizeFilePath($path) {
+    $path = str_replace('\\', '/', trim((string)$path));
+    return preg_replace('#^(\./|\.\./)+#', '', $path);
+}
+
 function uploadFile($file, $uploadDir = 'uploads/') {
     $allowedExt = ['pdf','doc','docx','xls','xlsx','jpg','jpeg','png'];
     $maxSize    = 10 * 1024 * 1024;
@@ -52,11 +57,16 @@ function uploadFile($file, $uploadDir = 'uploads/') {
     if (!in_array($ext, $allowedExt))    return ['ok' => false, 'msg' => 'Format file tidak diizinkan.'];
 
     $newName = uniqid('arsip_', true) . '.' . $ext;
+    $uploadDir = rtrim($uploadDir, '/\\') . '/';
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+        return ['ok' => false, 'msg' => 'Folder upload tidak tersedia.'];
+    }
+
     $dest    = $uploadDir . $newName;
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) return ['ok' => false, 'msg' => 'Gagal menyimpan file.'];
 
-    return ['ok' => true, 'path' => $dest, 'name' => $file['name']];
+    return ['ok' => true, 'path' => normalizeFilePath($dest), 'name' => $file['name']];
 }
 
 // Ambil semua kecamatan berdasarkan wilayah_id (untuk AJAX atau form)

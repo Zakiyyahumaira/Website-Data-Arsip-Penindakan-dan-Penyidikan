@@ -23,8 +23,11 @@ $stmt = $pdo->prepare("SELECT * FROM arsip WHERE map_id = ?");
 $stmt->execute([$mapId]);
 $arsips = $stmt->fetchAll();
 foreach ($arsips as $arsip) {
-    if ($arsip['file_path'] && file_exists('../' . $arsip['file_path'])) {
-        @unlink('../' . $arsip['file_path']);
+    if ($arsip['file_path']) {
+        $filePath = normalizeFilePath($arsip['file_path']);
+        if (file_exists('../' . $filePath)) {
+            @unlink('../' . $filePath);
+        }
     }
 }
 $pdo->prepare("DELETE FROM arsip WHERE map_id = ?")->execute([$mapId]);

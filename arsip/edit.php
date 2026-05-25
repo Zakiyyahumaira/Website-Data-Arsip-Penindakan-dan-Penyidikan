@@ -126,7 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$upload['ok']) {
             $errors[] = $upload['msg'];
         } else {
-            if ($filePath && file_exists('../' . $filePath)) @unlink('../' . $filePath);
+            $oldPath = normalizeFilePath($filePath);
+            if ($filePath && file_exists('../' . $oldPath)) @unlink('../' . $oldPath);
             $filePath = $upload['path'];
             $fileName = $upload['name'];
         }

@@ -13,8 +13,11 @@ $arsip = $stmt->fetch();
 
 if ($arsip) {
     // Hapus file fisik jika ada
-    if ($arsip['file_path'] && file_exists('../' . $arsip['file_path'])) {
-        @unlink('../' . $arsip['file_path']);
+    if ($arsip['file_path']) {
+        $filePath = normalizeFilePath($arsip['file_path']);
+        if (file_exists('../' . $filePath)) {
+            @unlink('../' . $filePath);
+        }
     }
     $petugasNama = ($arsip['petugas_1'] ?? $arsip['nama_pegawai']) . ' / ' . ($arsip['petugas_2'] ?? '-');
     logAktivitas($pdo, $_SESSION['user_id'], 'Hapus arsip: ' . $petugasNama, $id);

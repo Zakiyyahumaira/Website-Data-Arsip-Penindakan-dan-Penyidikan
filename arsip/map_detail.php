@@ -173,7 +173,7 @@ $arsips = $stmt->fetchAll();
                         <td><?= formatTanggal($a['tanggal_dokumen']) ?></td>
                         <td>
                             <?php if ($a['file_path']): ?>
-                            <a href="../<?= $a['file_path'] ?>" target="_blank" title="<?= sanitize($a['file_name']) ?>">📥 Download</a>
+                            <a href="../<?= sanitize(normalizeFilePath($a['file_path'])) ?>" target="_blank" title="<?= sanitize($a['file_name']) ?>">📥 Download</a>
                             <?php else: ?>
                             -
                             <?php endif; ?>
