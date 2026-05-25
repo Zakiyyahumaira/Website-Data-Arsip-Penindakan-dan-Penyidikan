@@ -16,6 +16,7 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $noSurat           = trim($_POST['no_surat'] ?? '');
+    $mapId             = (int)($_POST['map_id'] ?? 0);
     $petugas1Id        = (int)($_POST['petugas_1_id'] ?? 0);
     $petugas2Id        = (int)($_POST['petugas_2_id'] ?? 0);
     $deskripsi         = trim($_POST['deskripsi'] ?? '');
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tglDokumen        = $_POST['tanggal_dokumen'] ?? '';
 
     if (!$noSurat)          $errors[] = 'Nomor surat wajib diisi.';
+    if (!$mapId)            $errors[] = 'Map/folder wajib dipilih.';
     if (!$petugas1Id)       $errors[] = 'Petugas 1 wajib dipilih.';
     if (!$petugas2Id)       $errors[] = 'Petugas 2 wajib dipilih.';
     if (!$waktuPenindakan)  $errors[] = 'Waktu penindakan wajib diisi.';
@@ -149,13 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $pdo->prepare(
                 "UPDATE arsip SET
-                 no_surat=?, nama_pegawai=?, petugas_1_id=?, petugas_2_id=?, deskripsi=?, jenis_pelanggaran_id=?,
+                 map_id=?, no_surat=?, nama_pegawai=?, petugas_1_id=?, petugas_2_id=?, deskripsi=?, jenis_pelanggaran_id=?,
                  wilayah_id=?, kecamatan_id=?, nama_tempat=?, waktu_penindakan=?,
                  tanggal_dokumen=?, file_path=?, file_name=?
                  WHERE id=?"
             );
             $stmt->execute([
-                $noSurat, $namaPegawai, $petugas1Id ?: null, $petugas2Id ?: null,
+                $mapId ?: null, $noSurat, $namaPegawai, $petugas1Id ?: null, $petugas2Id ?: null,
                 $deskripsi, $jenisId,
                 $wilayahId ?: null, $kecamatanId ?: null, $namaTempat, $waktuPenindakan,
                 $tglDokumen ?: null, $filePath, $fileName, $id
@@ -205,10 +207,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $arsip = array_merge($arsip, $_POST, ['file_path' => $filePath, 'file_name' => $fileName]);
 }
 
-$jenisList  = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
-$wilayahs   = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
+$jenisList   = $pdo->query("SELECT * FROM jenis_pelanggaran ORDER BY nama_pelanggaran")->fetchAll();
+$wilayahs    = $pdo->query("SELECT * FROM wilayah ORDER BY id")->fetchAll();
+$maps        = $pdo->query("SELECT * FROM map ORDER BY nama_map")->fetchAll();
 $petugasList = $pdo->query("SELECT * FROM petugas ORDER BY nama")->fetchAll();
-$kecamatans = $arsip['wilayah_id'] ? getKecamatanByWilayah($pdo, $arsip['wilayah_id']) : [];
+$kecamatans  = $arsip['wilayah_id'] ? getKecamatanByWilayah($pdo, $arsip['wilayah_id']) : [];
 
 // Ambil data pelaku
 $pelakuList = $pdo->prepare("SELECT * FROM pelaku WHERE arsip_id = ? ORDER BY id");
@@ -273,6 +276,19 @@ $barangList = $barangList->fetchAll();
                 <div class="card-header"><h3>Edit Data Arsip</h3></div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label class="form-label">Map / Folder *</label>
+                            <select class="form-control" name="map_id" required>
+                                <option value="">-- Pilih Map --</option>
+                                <?php foreach ($maps as $m): ?>
+                                <option value="<?= $m['id'] ?>" <?= ($arsip['map_id'] ?? '') == $m['id'] ? 'selected' : '' ?>>
+                                    <?= sanitize($m['nama_map']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="form-hint"><a href="map.php">Kelola map di sini</a></div>
+                        </div>
 
                         <div class="form-row">
                             <div class="form-group">
