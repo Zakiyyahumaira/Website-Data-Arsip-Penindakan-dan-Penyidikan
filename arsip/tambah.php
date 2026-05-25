@@ -278,7 +278,7 @@ if (!empty($old['wilayah_id'])) {
                                 </option>
                                 <?php endforeach; ?>
                             </select>
-                            <div class="form-hint"><a href="map.php">Kelola map di sini</a></div>
+                            <div class="form-hint"><a href="map.php">Tambah map di sini</a></div>
                         </div>
 
                         <div class="form-row">
