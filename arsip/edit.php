@@ -269,7 +269,7 @@ $barangList = $barangList->fetchAll();
             </div>
             <?php endif; ?>
 
-            <div class="card" style="max-width:1000px">
+            <div class="card">
                 <div class="card-header"><h3>Edit Data Arsip</h3></div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
