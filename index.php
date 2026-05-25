@@ -68,7 +68,7 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
         </form>
 
         <p style="text-align:center;font-size:12px;color:#9ca3af;margin-top:24px">
-            Default: admin / admin123 &nbsp;|&nbsp; staff / staff123
+            Default: admin / P3n1nd4k4n123 &nbsp;|&nbsp; staff / staff123
         </p>
     </div>
 </div>
