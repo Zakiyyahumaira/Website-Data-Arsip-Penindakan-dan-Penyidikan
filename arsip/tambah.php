@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $pdo->commit();
-            logAktivitas($pdo, $_SESSION['user_id'], 'Upload arsip: ' . $namaPegawai, $arsipId);
+            logAktivitas($pdo, $_SESSION['user_id'], 'Input arsip: ' . $namaPegawai, $arsipId);
             header('Location: daftar.php?msg=tambah');
             exit;
         } catch (Exception $e) {
@@ -216,7 +216,7 @@ if (!empty($old['wilayah_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Arsip — Arsip Kantor</title>
+    <title>Input Arsip — Arsip Kantor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <style>
@@ -246,7 +246,7 @@ if (!empty($old['wilayah_id'])) {
     <div class="main-content">
         <div class="topbar">
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
-            <h1>Upload Arsip</h1>
+            <h1>Input Arsip</h1>
             <div class="topbar-actions">
             </div>
         </div>
@@ -263,7 +263,7 @@ if (!empty($old['wilayah_id'])) {
             <?php endif; ?>
 
             <div class="card">
-                <div class="card-header"><h3>Formulir Upload Arsip</h3></div>
+                <div class="card-header"><h3>Formulir Input Arsip</h3></div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
 

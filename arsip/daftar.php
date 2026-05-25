@@ -76,7 +76,7 @@ $msg = $_GET['msg'] ?? '';
             <button id="toggleSidebar" class="hamburger-btn">☰</button>
             <h1>Daftar Arsip</h1>
             <div class="topbar-actions">
-                <a href="tambah.php" class="btn btn-primary btn-sm">+ Upload Arsip</a>
+                <a href="tambah.php" class="btn btn-primary btn-sm">+ Input Arsip</a>
             </div>
         </div>
 

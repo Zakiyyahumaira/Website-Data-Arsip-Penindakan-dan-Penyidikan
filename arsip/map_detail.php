@@ -137,7 +137,7 @@ $arsips = $stmt->fetchAll();
                 <!-- Bagian 2: Tombol Actions -->
                 <div class="map-actions-section">
                     <a href="map_edit.php?id=<?= $map['id'] ?>" class="btn btn-sm btn-edit" style="background:#dbeafe;color:#1e40af;">Edit</a>
-                    <a href="tambah.php?map_id=<?= $map['id'] ?>" class="btn btn-primary btn-sm">+ Upload Arsip ke Map Ini</a>
+                    <a href="tambah.php?map_id=<?= $map['id'] ?>" class="btn btn-primary btn-sm">+ Input Arsip ke Map Ini</a>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@ $arsips = $stmt->fetchAll();
                 <div class="card-body">
             <?php if (empty($arsips)): ?>
             <div class="alert alert-info">
-                Belum ada arsip dalam map ini. <a href="tambah.php?map_id=<?= $map['id'] ?>">Upload arsip sekarang</a>
+                Belum ada arsip dalam map ini. <a href="tambah.php?map_id=<?= $map['id'] ?>">Input arsip sekarang</a>
             </div>
             <?php else: ?>
             <div class="table-wrap" style="padding:0;margin:0">

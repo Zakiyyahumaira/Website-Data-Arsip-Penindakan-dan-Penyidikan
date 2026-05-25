@@ -62,7 +62,7 @@ $perWilayah = $pdo->query(
             <h1>Dashboard</h1>
             <div class="topbar-actions">
                 <span style="font-size:13px;color:#6b7280"><?= date('l, d F Y') ?></span>
-                <a href="arsip/tambah.php" class="btn btn-primary btn-sm">+ Upload Arsip</a>
+                <a href="arsip/tambah.php" class="btn btn-primary btn-sm">+ Input Arsip</a>
             </div>
         </div>
 
