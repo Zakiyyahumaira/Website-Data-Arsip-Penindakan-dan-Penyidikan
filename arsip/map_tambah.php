@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <?php endif; ?>
 
-            <div class="card" style="max-width: 500px;">
+            <div class="card" style="width:100%">
                 <div class="card-header"><h3>Formulir Tambah Map</h3></div>
                 <div class="card-body">
                     <form method="POST">
