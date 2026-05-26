@@ -147,6 +147,10 @@ $fileIcon  = $fileIcons[$ext] ?? '📎';
                             <div class="info-value">
                                 <?php if ($arsip['jumlah'] !== null): ?>
                                     <strong><?= formatJumlah($arsip['jumlah'], $arsip['satuan']) ?></strong>
+
+                                <?php elseif (!empty($barangList)): ?>
+                                        <?= formatJumlah($barangList[0]['jumlah_barang'], $barangList[0]['satuan']) ?>
+
                                 <?php else: ?>
                                     <span style="color:#9ca3af">-</span>
                                 <?php endif; ?>
