@@ -163,11 +163,35 @@ $msg = $_GET['msg'] ?? '';
                                 <td style="font-size:13px"><?= sanitize($a['nama_map'] ?? '-') ?></td>
                                 <td><span class="badge badge-blue"><?= sanitize($a['nama_pelanggaran'] ?? '-') ?></span></td>
                                 <td style="font-size:13px"><?= sanitize($a['nama_wilayah'] ?? '-') ?></td>
-                                <td style="font-size:13px;color:#6b7280"><?= sanitize($a['nama_kecamatan'] ?? '-') ?></td>
+                                <td style="font-size:13px"><?= sanitize($a['nama_kecamatan'] ?? '-') ?></td>
                                 <td style="font-size:13px;white-space:nowrap">
-                                    <?= $a['jumlah'] !== null ? formatJumlah($a['jumlah'], $a['satuan']) : '-' ?>
+                                    <?php if ($a['jumlah'] !== null): ?>
+
+                                        <?= formatJumlah($a['jumlah'], $a['satuan']) ?>
+
+                                    <?php else: ?>
+
+                                        <?php
+                                        $barangStmt = $pdo->prepare("
+                                            SELECT jumlah_barang, satuan
+                                            FROM barang_hasil_penindakan
+                                            WHERE arsip_id = ?
+                                            LIMIT 1
+                                        ");
+
+                                        $barangStmt->execute([$a['id']]);
+                                        $barang = $barangStmt->fetch();
+                                        ?>
+
+                                        <?php if ($barang): ?>
+                                            <?= formatJumlah($barang['jumlah_barang'], $barang['satuan']) ?>
+                                        <?php else: ?>
+                                            <span style="color:#9ca3af">-</span>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
                                 </td>
-                                <td style="font-size:13px;color:#6b7280;white-space:nowrap"><?= formatTanggal($a['tanggal_dokumen']) ?></td>
+                                <td style="font-size:13px;white-space:nowrap"><?= formatTanggal($a['tanggal_dokumen']) ?></td>
                                 <td>
                                     <?php if ($a['file_path']): ?>
                                     <a href="../<?= sanitize(normalizeFilePath($a['file_path'])) ?>" target="_blank" class="file-link">

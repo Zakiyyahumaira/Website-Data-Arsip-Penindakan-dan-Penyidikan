@@ -18,11 +18,17 @@ if (!$map) {
 
 // Ambil arsip dalam map ini
 $stmt = $pdo->prepare(
-    "SELECT a.*, jp.nama_pelanggaran, p1.nama AS petugas_1, p2.nama AS petugas_2
+    "SELECT a.*, 
+            jp.nama_pelanggaran, 
+            p1.nama AS petugas_1, 
+            p2.nama AS petugas_2,
+            b.jumlah_barang,
+            b.satuan
      FROM arsip a
      LEFT JOIN petugas p1 ON a.petugas_1_id = p1.id
      LEFT JOIN petugas p2 ON a.petugas_2_id = p2.id
      LEFT JOIN jenis_pelanggaran jp ON a.jenis_pelanggaran_id = jp.id
+     LEFT JOIN barang_hasil_penindakan b ON a.id = b.arsip_id
      WHERE a.map_id = ?
      ORDER BY a.created_at DESC"
 );
@@ -169,7 +175,9 @@ $arsips = $stmt->fetchAll();
                         <td><?= sanitize($a['no_surat']) ?></td>
                         <td><a href="detail.php?id=<?= $a['id'] ?>" style="color:#1e40af;text-decoration:none"><?= sanitize($a['petugas_1'] . ' / ' . $a['petugas_2']) ?></a></td>
                         <td><?= sanitize($a['nama_pelanggaran'] ?? '') ?></td>
-                        <td><?= formatJumlah($a['jumlah'], $a['satuan']) ?></td>
+                        <td style="font-size:13px;white-space:nowrap;color:#1f2937">
+                            <?= formatJumlah($a['jumlah_barang'], $a['satuan']) ?>
+                        </td>
                         <td><?= formatTanggal($a['tanggal_dokumen']) ?></td>
                         <td>
                             <?php if ($a['file_path']): ?>
